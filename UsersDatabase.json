@@ -1,0 +1,65 @@
+{
+    "_data": [
+        {
+            "userName": "djohnson",
+            "id": "darasjohnson",
+            "email": "darasjohnson@outlook.com",
+            "firstName": "Daras",
+            "password": "pass123",
+            "lastName": "Johnson",
+            "active": false,
+            "age": "28"
+        },
+        {
+            "userName": "rsherman",
+            "id": "rhuntsherman",
+            "email": "rashadmarquis@gmail.com",
+            "firstName": "Rashad",
+            "password": "pass123",
+            "lastName": "Hunt-Sherman",
+            "active": true,
+            "age": "28"
+        },
+        {
+            "userName": "ascott",
+            "id": "",
+            "email": "angelescott@yahoo.com",
+            "firstName": "Angele",
+            "password": "pass123",
+            "lastName": "Scott",
+            "active": true,
+            "age": "47"
+        },
+        {
+            "userName": "dscott",
+            "id": "",
+            "email": "black5@gmail.com",
+            "firstName": "Daris",
+            "password": "pass123",
+            "lastName": "Scott",
+            "active": true,
+            "age": "47"
+        },
+        {
+            "userName": "awoods",
+            "id": "ashlynwoods",
+            "email": "awoods@gmail.com",
+            "firstName": "Ashlyn",
+            "password": "pass123",
+            "lastName": "Woods",
+            "active": true,
+            "age": "18"
+        },
+        {
+            "_firstName": "Test",
+            "_lastName": "User5",
+            "_email": "testuser5@email.com",
+            "_age": "56",
+            "_active": true,
+            "_id": "774566055902553288295920904439485188",
+            "_username": "testuser5",
+            "_password": "pass123"
+        }
+    ],
+    "_fileName": "UsersDatabase.json"
+}

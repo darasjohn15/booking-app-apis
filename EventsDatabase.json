@@ -1,0 +1,76 @@
+{
+    "_data": [
+        {
+            "name": "New Faces 2023",
+            "id": "1",
+            "date": "06/02/2023",
+            "hostID": "darasjohnson",
+            "location": "Friends on Ponce",
+            "active": false,
+            "performers": [],
+            "requestedPerformers": [
+                "rhuntsherman",
+                "ashlynwoods"
+            ]
+        },
+        {
+            "name": "New Faces 2024",
+            "id": "2",
+            "date": "07/25/2024",
+            "hostID": "darasjohnson",
+            "location": "Friends on Ponce",
+            "active": true,
+            "performers": [],
+            "requestedPerformers": []
+        },
+        {
+            "name": "Crazy Bitch Pageant",
+            "id": "311607268961562469698349551437085605583",
+            "date": "04/09/2019",
+            "hostID": "darasjohnson",
+            "location": "Atlanta",
+            "active": true,
+            "performers": [],
+            "requestedPerformers": []
+        },
+        {
+            "name": "Test Pageant",
+            "id": "257080206287217513841276524383326458782",
+            "date": "06/07/2010",
+            "hostID": "darasjohnson",
+            "location": "Atlanta",
+            "active": true,
+            "performers": [],
+            "requestedPerformers": []
+        },
+        {
+            "id": "186035921253834098259451092092108096622",
+            "date": "04/08/2020",
+            "hostID": "",
+            "name": "Test Pageant",
+            "location": "LaPlace, LA",
+            "active": true,
+            "performers": [],
+            "requestedPerformers": []
+        },
+        {
+            "id": "108455246624220363694771489689948389257",
+            "name": "Test",
+            "location": "05/01/2023",
+            "date": "darasjohnson",
+            "hostID": "Atlanta",
+            "performers": [],
+            "requestedPerformers": []
+        },
+        {
+            "id": "187886223812639381488011025581751282421",
+            "name": "Test2",
+            "location": "Atlanta",
+            "date": "05/01/2023",
+            "hostID": "darasjohnson",
+            "performers": [],
+            "requestedPerformers": []
+        }
+    ],
+    "_fileName": "EventsDatabase.json"
+}
