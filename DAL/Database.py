@@ -3,7 +3,7 @@ import json
 class DatabaseObject:
 
     def __init__(self, fileName):
-        self._fileName = "booking-app-apis/Data/" + fileName
+        self._fileName = "./Data/" + fileName
 
         with open(self._fileName, "r") as f:
             data = json.load(f)

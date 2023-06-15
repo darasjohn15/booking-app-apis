@@ -1,6 +1,6 @@
 import Models.User
 import Models.Event
-import DAL.UsersDAL
+import DAL.UsersDAL 
 import DAL.EventsDAL
 import json
 from flask import *
@@ -52,7 +52,7 @@ def getEventsByDate(month, year):
     return json_object
 
 def createNewEvent(name, date, hostID, location):
-    newEvent = Event.Event(name, date, hostID, location)
+    newEvent = Models.Event.Event(name, date, hostID, location)
     eventsData.createEvent(newEvent)
     json_object = json.dumps(newEvent, default=lambda o: o.__dict__, indent=4)
     return json_object
