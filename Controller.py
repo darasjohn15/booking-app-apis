@@ -4,6 +4,8 @@ import DAL.UsersDAL
 import DAL.EventsDAL
 import json
 from flask import *
+import jwt
+import datetime
 
 # Get the Users Database data
 usersData = DAL.UsersDAL.UsersDAL("UsersData.json")
@@ -11,15 +13,17 @@ usersData = DAL.UsersDAL.UsersDAL("UsersData.json")
 #Get Events Data
 eventsData = DAL.EventsDAL.EventsDAL("EventsData.json")
 
+def auth(userName):
+    token = jwt.encode({'user' : userName, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, "Secret_key", algorithm="HS256")
+    return jsonify({'token': token})
+
 def getUsers():
     data_set = usersData.getUsers()
-    json_object = json.dumps(data_set)
-    return json_object
+    return jsonify(data_set)
 
 def getUser(id):
     data_set = usersData.getUser(id)
-    json_object = json.dumps(data_set)
-    return json_object
+    return jsonify(data_set)
 
 def createNewUser(firstName, lastName, age):
     newUser = Models.User.User(firstName, lastName, age)

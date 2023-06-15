@@ -3,6 +3,12 @@ import Controller
 
 app = Flask(__name__)
 
+
+
+@app.route('/login', methods=['GET'])
+def login():
+    return Controller.auth(request.args.get('userName'))
+
 # =======================================================================
 #  
 # Users APIs
