@@ -1,6 +1,6 @@
-import Database
+from DAL.Database import DatabaseObject
 
-class UsersDatabase(Database.Database):
+class UsersDAL(DatabaseObject):
 
     def addUser(self, user):
         self._data.append(user)

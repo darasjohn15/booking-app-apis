@@ -1,13 +1,15 @@
 import json
 
-class Database:
+class DatabaseObject:
 
     def __init__(self, fileName):
-        with open(fileName, "r") as f:
+        self._fileName = "booking-app-apis/Data/" + fileName
+
+        with open(self._fileName, "r") as f:
             data = json.load(f)
 
         self._data = data['_data']
-        self._fileName = fileName
+        
 
     def save(self):
 

@@ -1,7 +1,7 @@
-import Database
-import DateHelper
+from DAL.Database import DatabaseObject
+import Helpers.DateHelper
 
-class EventsDatabase(Database.Database):
+class EventsDAL(DatabaseObject):
 
     def printOutEventInfo(self, event):
         print('')
@@ -63,7 +63,7 @@ class EventsDatabase(Database.Database):
     def getEventsByDate(self, month, year):
         results = []
         for x in self._data:
-            if (x['active'] == True and DateHelper.getMonthFromDate(x['date']) == month and DateHelper.getYearFromDate(x['date']) == year):
+            if (x['active'] == True and Helpers.DateHelper.getMonthFromDate(x['date']) == month and Helpers.DateHelper.getYearFromDate(x['date']) == year):
                 results.append(x)
         
         return results

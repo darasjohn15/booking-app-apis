@@ -1,127 +1,107 @@
-import Authentication
-import User
-import Event
-import json
-import UsersDatabase
-import EventsDatabase
 from flask import *
+import Controller
 
-# Get the Users Database data
-usersDB = UsersDatabase.UsersDatabase("UsersDatabase.json")
+app = Flask(__name__)
 
-#Get Events Data
-eventsDB = EventsDatabase.EventsDatabase("EventsDatabase.json")
+# =======================================================================
+#  
+# Users APIs
+#
+# ======================================================================= 
 
-def getUsers():
-    data_set = usersDB.getUsers()
-    json_object = json.dumps(data_set)
-    return json_object
+# Get All Users
+@app.route('/users', methods=['GET'])
+def get_all_users():
+    return Controller.getUsers()
 
-def getUser(id):
-    data_set = usersDB.getUser(id)
-    json_object = json.dumps(data_set)
-    return json_object
+# Get A Single User by UserID
+@app.route('/user', methods=['GET'])
+def get_user():
+    id = str(request.args.get('userId'))
+    return Controller.getUser(id)
 
-def createNewUser(firstName, lastName, age):
-    newUser = User.User(firstName, lastName, age)
-    usersDB.addUser(newUser)
-    json_object = json.dumps(newUser, default=lambda o: o.__dict__, indent=4)
-    return json_object
+# Create a New User
+@app.route('/user', methods=['POST'])
+def create_user():
+    return Controller.createNewUser(request.json['firstName'], request.json['lastName'], request.json['age'])
 
-def deactivateUser(userId):
-    usersDB.deactivateUser(userId)
-    return getUser(userId)
+# Deactivate User
+@app.route('/user', methods=['DELETE'])
+def deactivate_user():
+    return Controller.deactivateUser(request.json['userId'])
 
-def getEvents():
-    data_set = eventsDB.getAllEvents()
-    json_object = json.dumps(data_set)
-    return json_object
+# =======================================================================
+#  
+# Events APIs
+#
+# ======================================================================= 
 
-def getEventsByLocation(location):
-    data_set = eventsDB.getEventsByLocation(location)
-    json_object = json.dumps(data_set)
-    return json_object
+# Get All Events
+@app.route('/events', methods=['GET'])
+def get_all_events():
+    return Controller.getEvents()
 
-def getEventsByHost(host):
-    data_set = eventsDB.getEventsByHost(host)
-    json_object = json.dumps(data_set)
-    return json_object
+# Get Events By Location
+@app.route('/events/location', methods=['GET'])
+def get_events_by_location():
+    location = str(request.args.get('location'))
+    return Controller.getEventsByLocation(location)
 
-def getEventsByDate(month, year):
-    data_set = eventsDB.getEventsByDate(month, year)
-    json_object = json.dumps(data_set)
-    return json_object
+# Get Events By Host
+@app.route('/events/host', methods=['GET'])
+def get_events_by_host():
+    host = str(request.args.get('host'))
+    return Controller.getEventsByHost(host)
 
-def createNewEvent(name, date, hostID, location):
-    newEvent = Event.Event(name, date, hostID, location)
-    eventsDB.createEvent(newEvent)
-    json_object = json.dumps(newEvent, default=lambda o: o.__dict__, indent=4)
-    return json_object
+# Get Events By Date
+@app.route('/events/date', methods=['GET'])
+def get_events_by_date():
+    month = str(request.args.get('month'))
+    year = str(request.args.get('year'))
+    return Controller.getEventsByDate(month, year)
 
-def cancelEvent(eventId):
-    cancelled = eventsDB.cancelEvent(eventId)
+# Get Events By Venue
 
-    if(cancelled):
-        return 'Cancelled'
-    else:
-        return 'Could Not Cancelled'
+# Create New Event 
+@app.route('/event', methods=['POST'])
+def create_event():
+    return Controller.createNewEvent(request.json['name'], request.json['date'], request.json['hostID'], request.json['location'])
 
-def getEventPerformers(eventId):
+# Cancel Event
+@app.route('/event/cancel', methods=['GET'])
+def cancel_event():
+    return Controller.cancelEvent(request.args.get('eventId'))
 
-    #Get the list of userIds
-    data_set = eventsDB.getEventPerformers(eventId)
+# Get Performers
+@app.route('/event/performers', methods=['GET'])
+def get_event_performers():
+    return Controller.getEventPerformers(request.args.get('eventId'))
 
-    #Get each performers info
-    results = []
-    for performer in data_set:
-        performerInfo = usersDB.getUser(performer)
-        results.append(performerInfo)
+# Get Requested Performers
+@app.route('/event/requested', methods=['GET'])
+def get_event_requested_performers():
+    return Controller.getEventRequestedPerformers(request.args.get('eventId'))
 
-    json_object = json.dumps(results)
-    return json_object
+# Add Requested Performer
+@app.route('/event/request', methods=['GET'])
+def request_performer():
+    return Controller.requestEvent(request.args.get('eventId'), request.args.get('userId'))
 
-def getEventRequestedPerformers(eventId):
+# Book a Performer
+@app.route('/event/approve', methods=['GET'])
+def approve_performer():
+    return Controller.approvePerformer(request.args.get('eventId'), request.args.get('userId'))
 
-    #Get the list of userIds
-    data_set = eventsDB.getEventRequestedPerformers(eventId)
+# Deny a Performer
+@app.route('/event/deny', methods=['GET'])
+def deny_performer():
+    return Controller.denyPerformer(request.args.get('eventId'), request.args.get('userId'))
 
-    #Get each performers info
-    results = []
-    for performer in data_set:
-        performerInfo = usersDB.getUser(performer)
-        results.append(performerInfo)
+# Remove a Performer from Event
+@app.route('/event/remove', methods=['GET'])
+def remove_performer():
+    return Controller.removePerformer(request.args.get('eventId'), request.args.get('userId'))
 
-    json_object = json.dumps(results)
-    return json_object
 
-def requestEvent(eventId, userId):
-    requested = eventsDB.requestEvent(eventId, userId)
-
-    if (requested):
-        return "Requested"
-    else:
-        return "User Not Found"
-
-def approvePerformer(eventId, performerId):
-    approved = eventsDB.approvePerformer(eventId, performerId)
-
-    if(approved):
-        return 'Approved'
-    else:
-        return 'Not Approved'
-    
-def removePerformer(eventId, userId):
-    removed = eventsDB.removePerformer(eventId, userId)
-
-    if(removed):
-        return 'Removed'
-    else:
-        return 'Performer Not Found'
-    
-def denyPerformer(eventId, userId):
-    denied = eventsDB.denyPerformer(eventId, userId)
-
-    if (denied):
-        return 'User Denied'
-    else:
-        return 'User Not Found'
+if __name__ == '__main__':
+    app.run(port=8085)
