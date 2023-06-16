@@ -19,10 +19,10 @@ class UsersDAL(DatabaseObject):
             if(id == userid):
                 return x
             
-    def getPasswordByUsername(self, userName):
+    def getUserByUsername(self, userName):
         for x in self._data:
             if (userName == x['userName']):
-                return x['password']
+                return x
 
     def updateUser(self, user):
         for x in self._data:

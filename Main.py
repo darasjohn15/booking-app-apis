@@ -20,20 +20,22 @@ def login():
 # ======================================================================= 
 
 # Get All Users
-@app.route('/users', methods=['GET'])
-def get_all_users():
-    return Controller.getUsers()
+@app.route('/users/<currentUserId>', methods=['GET'])
+def get_all_users(currentUserId):
+    token = request.headers['x-access-token']
+    return Controller.getUsers(token, currentUserId)
 
 # Get A Single User by UserID
-@app.route('/user', methods=['GET'])
-def get_user():
-    id = str(request.args.get('userId'))
-    return Controller.getUser(id)
+@app.route('/user/<currentUserId>/<userId>', methods=['GET'])
+def get_user(currentUserId, userId):
+    token = request.headers['x-access-token']
+    return Controller.getUser(token, currentUserId, userId)
 
 # Create a New User
-@app.route('/user', methods=['POST'])
-def create_user():
-    return Controller.createNewUser(request.json['firstName'], request.json['lastName'], request.json['age'])
+@app.route('/user/<currentUserId>', methods=['POST'])
+def create_user(currentUserId):
+    token = request.headers['x-access-token']
+    return Controller.createNewUser(token, currentUserId, request.json['firstName'], request.json['lastName'], request.json['age'])
 
 # Deactivate User
 @app.route('/user', methods=['DELETE'])

@@ -4,8 +4,6 @@ import DAL.UsersDAL
 import DAL.EventsDAL
 import json
 from flask import *
-import jwt
-import datetime
 import Authentication
 
 # Get the Users Database data
@@ -17,27 +15,37 @@ eventsData = DAL.EventsDAL.EventsDAL("EventsData.json")
 def auth(userName, password):
     
     #Get user data based on userName
-    expectedPassword = usersData.getPasswordByUsername(userName)
+    user = usersData.getUserByUsername(userName)
+    currentUser = user['id']
+    expectedPassword = user['password']
 
     if Authentication.authenticate(password, expectedPassword):
-        token = Authentication.generateJWT(userName)
+        token = Authentication.generateJWT(currentUser)
         return jsonify({'token': token })
 
     return jsonify({'message' : 'Invalid Login' })
 
-def getUsers():
-    data_set = usersData.getUsers()
-    return jsonify(data_set)
+def getUsers(token, userId):
+    if Authentication.isTokenValid(token, userId):
+        data_set = usersData.getUsers()
+        return jsonify(data_set)
+    
+    return jsonify({'message' : 'Invalid Token.'}), 401
 
-def getUser(id):
-    data_set = usersData.getUser(id)
-    return jsonify(data_set)
+def getUser(token, currentUserId, userId):
+    if Authentication.isTokenValid(token, currentUserId):
+        data_set = usersData.getUserById(userId)
+        return jsonify(data_set)
+    
+    return jsonify({'message' : 'Invalid Token.'}), 401
 
-def createNewUser(firstName, lastName, age):
-    newUser = Models.User.User(firstName, lastName, age)
-    usersData.addUser(newUser)
-    json_object = json.dumps(newUser, default=lambda o: o.__dict__, indent=4)
-    return json_object
+def createNewUser(token, currentUserId, firstName, lastName, age):
+    if Authentication.isTokenValid(token, currentUserId):
+        newUser = Models.User.User(firstName, lastName, age)
+        usersData.addUser(newUser)
+        return jsonify({ 'userName' : newUser.userName, 'password' : newUser.password})
+    
+    return jsonify({'message' : 'Invalid Token.'}), 401
 
 def deactivateUser(userId):
     usersData.deactivateUser(userId)
