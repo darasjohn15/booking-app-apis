@@ -6,6 +6,7 @@ import json
 from flask import *
 import jwt
 import datetime
+import Authentication
 
 # Get the Users Database data
 usersData = DAL.UsersDAL.UsersDAL("UsersData.json")
@@ -13,9 +14,16 @@ usersData = DAL.UsersDAL.UsersDAL("UsersData.json")
 #Get Events Data
 eventsData = DAL.EventsDAL.EventsDAL("EventsData.json")
 
-def auth(userName):
-    token = jwt.encode({'user' : userName, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, "Secret_key", algorithm="HS256")
-    return jsonify({'token': token})
+def auth(userName, password):
+    
+    #Get user data based on userName
+    expectedPassword = usersData.getPasswordByUsername(userName)
+
+    if Authentication.authenticate(password, expectedPassword):
+        token = Authentication.generateJWT(userName)
+        return jsonify({'token': token })
+
+    return jsonify({'message' : 'Invalid Login' })
 
 def getUsers():
     data_set = usersData.getUsers()

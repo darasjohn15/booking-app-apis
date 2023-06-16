@@ -13,11 +13,16 @@ class UsersDAL(DatabaseObject):
     def getUsers(self):
         return self._data
 
-    def getUser(self, id):
+    def getUserById(self, id):
         for x in self._data:
             userid = x['id']
             if(id == userid):
                 return x
+            
+    def getPasswordByUsername(self, userName):
+        for x in self._data:
+            if (userName == x['userName']):
+                return x['password']
 
     def updateUser(self, user):
         for x in self._data:

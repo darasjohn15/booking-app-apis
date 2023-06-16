@@ -3,11 +3,15 @@ import Controller
 
 app = Flask(__name__)
 
+# =======================================================================
+#  
+# Authentication API
+#
+# ======================================================================= 
 
-
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['POST'])
 def login():
-    return Controller.auth(request.args.get('userName'))
+    return Controller.auth(request.json['userName'], request.json['password'])
 
 # =======================================================================
 #  
