@@ -1,4 +1,5 @@
 {
+    "_fileName": "./Data/EventsData.json",
     "_data": [
         {
             "name": "New Faces 2023",
@@ -7,9 +8,10 @@
             "hostID": "darasjohnson",
             "location": "Friends on Ponce",
             "active": false,
-            "performers": [],
+            "performers": [
+                "rhuntsherman"
+            ],
             "requestedPerformers": [
-                "rhuntsherman",
                 "ashlynwoods"
             ]
         },
@@ -60,6 +62,7 @@
             "date": "darasjohnson",
             "hostID": "Atlanta",
             "performers": [],
+            "active": true,
             "requestedPerformers": []
         },
         {
@@ -69,8 +72,8 @@
             "date": "05/01/2023",
             "hostID": "darasjohnson",
             "performers": [],
+            "active": true,
             "requestedPerformers": []
         }
-    ],
-    "_fileName": "EventsDatabase.json"
+    ]
 }

@@ -8,6 +8,7 @@ class Event:
         self.location = location
         self.date = date
         self.hostID = userId
+        self.active = True
 
     def printOutEventInfo(self, event):
         print('')
