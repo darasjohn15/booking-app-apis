@@ -2,11 +2,10 @@ import Models.User
 import Models.Event
 import DAL.UsersDAL 
 import DAL.EventsDAL
-import json
 from flask import *
 import Authentication
 
-# Get the Users Database data
+# Get the Users Data
 usersData = DAL.UsersDAL.UsersDAL("UsersData.json")
 
 #Get Events Data
@@ -59,7 +58,7 @@ def getEvents(token, currentUserId):
         data_set = eventsData.getAllEvents()
         return jsonify(data_set)
     
-    return 
+    return jsonify({'message' : 'Invalid Token.'})
 
 def getEventsByLocation(token, currentUserId, location):
     if Authentication.isTokenValid(token, currentUserId):
