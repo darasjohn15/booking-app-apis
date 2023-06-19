@@ -51,14 +51,14 @@
             "age": "18"
         },
         {
-            "_firstName": "Test",
-            "_lastName": "User5",
-            "_email": "testuser5@email.com",
-            "_age": "56",
-            "_active": true,
-            "_id": "774566055902553288295920904439485188",
-            "_username": "testuser5",
-            "_password": "pass123"
+            "firstName": "Test",
+            "lastName": "User5",
+            "email": "testuser5@email.com",
+            "age": "56",
+            "active": true,
+            "id": "774566055902553288295920904439485188",
+            "userName": "testuser5",
+            "password": "pass123"
         }
     ],
     "_fileName": "UsersDatabase.json"
