@@ -1,0 +1,587 @@
+{
+	"info": {
+		"_postman_id": "2d54cf52-ea06-46f4-af29-7e74b1226719",
+		"name": "Book A Gig App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGFyYXNqb2huc29uIiwiZXhwIjoxNjg2ODg4OTAxfQ.euoHv3P6Zmb_8RlEqPbk3tnJ56xDB42eXCN4Uuk3HRA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Cmon\",\n    \"lastName\": \"Bitch3\",\n    \"age\": \"28\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8085/user/darasjohnson",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"user",
+						"darasjohnson"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Event",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Test\",\n    \"LastName\": \"User\",\n    \"age\": \"56\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8085/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGFyYXNqb2huc29uIiwiZXhwIjoxNjg2ODg4OTAxfQ.euoHv3P6Zmb_8RlEqPbk3tnJ56xDB42eXCN4Uuk3HRA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8085/user/darasjohnson/rhuntsherman",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"user",
+						"darasjohnson",
+						"rhuntsherman"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGFyYXNqb2huc29uIiwiZXhwIjoxNjg2ODg4OTAxfQ.euoHv3P6Zmb_8RlEqPbk3tnJ56xDB42eXCN4Uuk3HRA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8085/users/darasjohnson",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"users",
+						"darasjohnson"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Events",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGFyYXNqb2huc29uIiwiZXhwIjoxNjg3MjY5MTUxfQ.i0YL0bzOfk-iD1Ay6yKN64oBfdQgbETfTa1pPE_7lLI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8085/events/darasjohnson",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"events",
+						"darasjohnson"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Events By Location",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGFyYXNqb2huc29uIiwiZXhwIjoxNjg3MjY5MTUxfQ.i0YL0bzOfk-iD1Ay6yKN64oBfdQgbETfTa1pPE_7lLI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8085/events/location/darasjohnson?location=Atlanta",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"events",
+						"location",
+						"darasjohnson"
+					],
+					"query": [
+						{
+							"key": "location",
+							"value": "Atlanta"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Events By Host",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGFyYXNqb2huc29uIiwiZXhwIjoxNjg3MjY5MTUxfQ.i0YL0bzOfk-iD1Ay6yKN64oBfdQgbETfTa1pPE_7lLI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8085/events/host/darasjohnson?host=darasjohnson",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"events",
+						"host",
+						"darasjohnson"
+					],
+					"query": [
+						{
+							"key": "host",
+							"value": "darasjohnson"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Events By Date",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGFyYXNqb2huc29uIiwiZXhwIjoxNjg3MjY5MTUxfQ.i0YL0bzOfk-iD1Ay6yKN64oBfdQgbETfTa1pPE_7lLI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8085/events/date/darasjohnson?month=04&year=2020",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"events",
+						"date",
+						"darasjohnson"
+					],
+					"query": [
+						{
+							"key": "month",
+							"value": "04"
+						},
+						{
+							"key": "year",
+							"value": "2020"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": \"darasjohnson\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8085/user",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Event Performers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8085/event/performers?eventId=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"event",
+						"performers"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Approve Performer",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGFyYXNqb2huc29uIiwiZXhwIjoxNjg3MjY5MTUxfQ.i0YL0bzOfk-iD1Ay6yKN64oBfdQgbETfTa1pPE_7lLI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8085/event/approve/darasjohnson?eventId=1&userId=rhuntsherman",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"event",
+						"approve",
+						"darasjohnson"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "1"
+						},
+						{
+							"key": "userId",
+							"value": "rhuntsherman"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request Event",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGFyYXNqb2huc29uIiwiZXhwIjoxNjg3MjY5MTUxfQ.i0YL0bzOfk-iD1Ay6yKN64oBfdQgbETfTa1pPE_7lLI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8085/event/request/darasjohnson?eventId=1&userId=ashlynwoods",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"event",
+						"request",
+						"darasjohnson"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "1"
+						},
+						{
+							"key": "userId",
+							"value": "ashlynwoods"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deny Performer",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGFyYXNqb2huc29uIiwiZXhwIjoxNjg3MjY5MTUxfQ.i0YL0bzOfk-iD1Ay6yKN64oBfdQgbETfTa1pPE_7lLI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8085/event/deny/darasjohnson?eventId=1&userId=ashlynwoods",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"event",
+						"deny",
+						"darasjohnson"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "1"
+						},
+						{
+							"key": "userId",
+							"value": "ashlynwoods"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Performer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8085/event/remove?eventId=1&userId=darasjohnson",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"event",
+						"remove"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "1"
+						},
+						{
+							"key": "userId",
+							"value": "darasjohnson"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Requested Performers",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGFyYXNqb2huc29uIiwiZXhwIjoxNjg3MjY5MTUxfQ.i0YL0bzOfk-iD1Ay6yKN64oBfdQgbETfTa1pPE_7lLI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8085/event/requested/darasjohnson?eventId=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"event",
+						"requested",
+						"darasjohnson"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Event",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8085/event/cancel?eventId=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"event",
+						"cancel"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userName\": \"djohnson\",\n    \"password\": \"pass123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8085/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
