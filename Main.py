@@ -1,7 +1,9 @@
 from flask import *
+from flask_cors import CORS
 import Controller
 
 app = Flask(__name__)
+CORS(app)
 
 # =======================================================================
 #  
@@ -11,7 +13,9 @@ app = Flask(__name__)
 
 @app.route('/login', methods=['POST'])
 def login():
-    return Controller.auth(request.json['userName'], request.json['password'])
+    response = make_response(Controller.auth(request.json['userName'], request.json['password']))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 # =======================================================================
 #  

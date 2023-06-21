@@ -9,11 +9,10 @@
             "location": "Friends on Ponce",
             "active": false,
             "performers": [
-                "rhuntsherman"
-            ],
-            "requestedPerformers": [
+                "rhuntsherman",
                 "ashlynwoods"
-            ]
+            ],
+            "requestedPerformers": []
         },
         {
             "name": "New Faces 2024",

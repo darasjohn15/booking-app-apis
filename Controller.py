@@ -15,6 +15,10 @@ def auth(userName, password):
     
     #Get user data based on userName
     user = usersData.getUserByUsername(userName)
+
+    if not user:
+        return jsonify({'message' : 'User not found'}), 401
+
     currentUser = user['id']
     expectedPassword = user['password']
 
