@@ -59,6 +59,11 @@ def get_all_events(currentUserId):
     token = request.headers['x-access-token']
     return Controller.getEvents(token, currentUserId)
 
+@app.route('/events/active/<currentUserId>', methods=['GET'])
+def get_all_active_events(currentUserId):
+    token = request.headers['x-access-token']
+    return Controller.getActiveEvents(token, currentUserId)
+
 # Get Events By Location
 @app.route('/events/location/<currentUserId>', methods=['GET'])
 def get_events_by_location(currentUserId):
@@ -84,49 +89,49 @@ def get_events_by_date(currentUserId):
 # Get Events By Venue
 
 # Create New Event 
-@app.route('/event/<currentUserId>', methods=['POST'])
+@app.route('/events/<currentUserId>', methods=['POST'])
 def create_event(currentUserId):
     token = request.headers['x-access-token']
     return Controller.createNewEvent(token, currentUserId, request.json['name'], request.json['date'], request.json['hostID'], request.json['location'])
 
 # Cancel Event
-@app.route('/event/cancel/<currentUserId>', methods=['GET'])
+@app.route('/events/cancel/<currentUserId>', methods=['GET'])
 def cancel_event(currentUserId):
     token = request.headers['x-access-token']
     return Controller.cancelEvent(token, currentUserId, request.args.get('eventId'))
 
 # Get Performers
-@app.route('/event/performers/<currentUserId>', methods=['GET'])
+@app.route('/events/performers/<currentUserId>', methods=['GET'])
 def get_event_performers(currentUserId):
     token = request.headers['x-access-token']
     return Controller.getEventPerformers(token, currentUserId, request.args.get('eventId'))
 
 # Get Requested Performers
-@app.route('/event/requested/<currentUserId>', methods=['GET'])
-def get_event_requested_performers(currentUserId):
+@app.route('/events/requested/<currentUserId>', methods=['GET'])
+def get_event_requesteds_performers(currentUserId):
     token = request.headers['x-access-token']
     return Controller.getEventRequestedPerformers(token, currentUserId, request.args.get('eventId'))
 
 # Add Requested Performer
-@app.route('/event/request/<currentUserId>', methods=['GET'])
+@app.route('/events/request/<currentUserId>', methods=['GET'])
 def request_performer(currentUserId):
     token = request.headers['x-access-token']
     return Controller.requestEvent(token, currentUserId, request.args.get('eventId'), request.args.get('userId'))
 
 # Book a Performer
-@app.route('/event/approve/<currentUserId>', methods=['GET'])
+@app.route('/events/approve/<currentUserId>', methods=['GET'])
 def approve_performer(currentUserId):
     token = request.headers['x-access-token']
     return Controller.approvePerformer(token, currentUserId, request.args.get('eventId'), request.args.get('userId'))
 
 # Deny a Performer
-@app.route('/event/deny/<currentUserId>', methods=['GET'])
+@app.route('/events/deny/<currentUserId>', methods=['GET'])
 def deny_performer(currentUserId):
     token = request.headers['x-access-token']
     return Controller.denyPerformer(token, currentUserId, request.args.get('eventId'), request.args.get('userId'))
 
 # Remove a Performer from Event
-@app.route('/event/remove<currentUserId>', methods=['GET'])
+@app.route('/events/remove<currentUserId>', methods=['GET'])
 def remove_performer(currentUserId):
     token = request.headers['x-access-token']
     return Controller.removePerformer(token, currentUserId, request.args.get('eventId'), request.args.get('userId'))

@@ -33,16 +33,27 @@ class EventsDAL(DatabaseObject):
 
     def cancelEvent(self, eventID):
         deactivated = False
+        found = False
         for x in self._data:
             if (x['id'] == eventID):
+                found = True
+                print('Events DAL: Event ' + eventID + ' found.')
+
                 x['active'] = False
                 deactivated = True
+                print('Events DAL: Event ' + eventID + ' cancelled.')
 
         if (deactivated):
             self.save()
             self.reload()
+            print('Events DAL: Database saved and reloaded.')
             return True
         else:
+            if (found):
+                print('Events DAL: Event could not be cancelled.')
+            else:
+                print('Events DAL: Event could not found.')
+            
             return False
 
     def getEventsByLocation(self, location):
@@ -70,6 +81,14 @@ class EventsDAL(DatabaseObject):
     
     def getAllEvents(self):
         return self._data
+
+    def getActiveEvents(self):
+        results = []
+        for x in self._data:
+            if (x['active'] == True):
+                results.append(x)
+        
+        return results
     
     def getEventsByHost(self, host):
         results = []

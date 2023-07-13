@@ -64,6 +64,13 @@ def getEvents(token, currentUserId):
     
     return jsonify({'message' : 'Invalid Token.'})
 
+def getActiveEvents(token, currentUserId):
+    if Authentication.isTokenValid(token, currentUserId):
+        data_set = eventsData.getActiveEvents()
+        return jsonify(data_set)
+    
+    return jsonify({'message' : 'Invalid Token.'})
+    
 def getEventsByLocation(token, currentUserId, location):
     if Authentication.isTokenValid(token, currentUserId):
         data_set = eventsData.getEventsByLocation(location)
