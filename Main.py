@@ -92,13 +92,17 @@ def get_events_by_date(currentUserId):
 @app.route('/events/<currentUserId>', methods=['POST'])
 def create_event(currentUserId):
     token = request.headers['x-access-token']
-    return Controller.createNewEvent(token, currentUserId, request.json['name'], request.json['date'], request.json['hostID'], request.json['location'])
+    print('Main: Event Name = ' + request.json['name'])
+    print('Main: Event Location = ' + request.json['location'])
+    print('Main: Event Date = ' + request.json['date'])
+    return Controller.createNewEvent(token, currentUserId, request.json['name'], request.json['date'], request.json['location'])
 
 # Cancel Event
 @app.route('/events/cancel/<currentUserId>', methods=['GET'])
 def cancel_event(currentUserId):
     token = request.headers['x-access-token']
-    return Controller.cancelEvent(token, currentUserId, request.args.get('eventId'))
+    eventId = request.args.get('eventId')
+    return Controller.cancelEvent(token, currentUserId, eventId)
 
 # Get Performers
 @app.route('/events/performers/<currentUserId>', methods=['GET'])

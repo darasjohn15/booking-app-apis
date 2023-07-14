@@ -50,9 +50,9 @@ class EventsDAL(DatabaseObject):
             return True
         else:
             if (found):
-                print('Events DAL: Event could not be cancelled.')
+                print('Events DAL: Event ' + eventID + ' could not be cancelled.')
             else:
-                print('Events DAL: Event could not found.')
+                print('Events DAL: Event ' + eventID + ' could not found.')
             
             return False
 

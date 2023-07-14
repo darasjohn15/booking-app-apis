@@ -42,7 +42,7 @@
             "date": "06/07/2010",
             "hostID": "darasjohnson",
             "location": "Atlanta",
-            "active": true,
+            "active": false,
             "performers": [],
             "requestedPerformers": []
         },
@@ -52,7 +52,7 @@
             "hostID": "",
             "name": "Test Pageant",
             "location": "LaPlace, LA",
-            "active": true,
+            "active": false,
             "performers": [],
             "requestedPerformers": []
         },
@@ -63,7 +63,7 @@
             "date": "darasjohnson",
             "hostID": "Atlanta",
             "performers": [],
-            "active": true,
+            "active": false,
             "requestedPerformers": []
         },
         {
@@ -73,7 +73,107 @@
             "date": "05/01/2023",
             "hostID": "darasjohnson",
             "performers": [],
+            "active": true,
+            "requestedPerformers": []
+        },
+        {
+            "id": "156135719036942234730337087764310141436",
+            "name": "Test Name from Postman",
+            "location": "Test Location from Postman",
+            "date": "07/13/2023",
+            "hostID": "darasjohnson",
             "active": false,
+            "performers": [],
+            "requestedPerformers": []
+        },
+        {
+            "id": "133119309095574645717313478508327055909",
+            "name": "Test Name2 from Postman",
+            "location": "Test Location2 from Postman",
+            "date": "07/13/2023",
+            "hostID": "darasjohnson",
+            "active": true,
+            "performers": [],
+            "requestedPerformers": []
+        },
+        {
+            "id": "188108684017598743387156340325490752156",
+            "name": "Test23",
+            "location": "Test Location",
+            "date": "07/12/2022",
+            "hostID": "darasjohnson",
+            "active": false,
+            "performers": [],
+            "requestedPerformers": []
+        },
+        {
+            "id": "277953533112751749551284237986992521183",
+            "name": "Test24",
+            "location": "From UI",
+            "date": "07/13/2023",
+            "hostID": "darasjohnson",
+            "active": false,
+            "performers": [],
+            "requestedPerformers": []
+        },
+        {
+            "id": "20606484373454274062151772298149437291",
+            "name": "Test25",
+            "location": "From UI",
+            "date": "07/13/2023",
+            "hostID": "darasjohnson",
+            "active": false,
+            "performers": [],
+            "requestedPerformers": []
+        },
+        {
+            "id": "133985283487321061192475180073929647924",
+            "name": "Test26",
+            "location": "From UI",
+            "date": "07/13/2023",
+            "hostID": "darasjohnson",
+            "active": false,
+            "performers": [],
+            "requestedPerformers": []
+        },
+        {
+            "id": "233940232976157908241067877352366480792",
+            "name": "Test27",
+            "location": "From UI",
+            "date": "07/13/2023",
+            "hostID": "darasjohnson",
+            "active": false,
+            "performers": [],
+            "requestedPerformers": []
+        },
+        {
+            "id": "220981136370658278474830837234676479227",
+            "name": "Test28",
+            "location": "From UI",
+            "date": "07/13/2023",
+            "hostID": "darasjohnson",
+            "active": false,
+            "performers": [],
+            "requestedPerformers": []
+        },
+        {
+            "id": "86938547997064088406461257611080979597",
+            "name": "New Event",
+            "location": "From UI",
+            "date": "07/13/2023",
+            "hostID": "darasjohnson",
+            "active": true,
+            "performers": [],
+            "requestedPerformers": []
+        },
+        {
+            "id": "242429361825882786235465280577462022100",
+            "name": "Test 39",
+            "location": "Test",
+            "date": "07/13/2023",
+            "hostID": "darasjohnson",
+            "active": true,
+            "performers": [],
             "requestedPerformers": []
         }
     ]

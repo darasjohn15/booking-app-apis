@@ -92,9 +92,9 @@ def getEventsByDate(token, currentUserId, month, year):
     
     return jsonify({'message' : 'Invalid Token.'})
 
-def createNewEvent(token, currentUserId, name, date, hostID, location):
+def createNewEvent(token, currentUserId, name, date, location):
     if Authentication.isTokenValid(token, currentUserId):
-        newEvent = Models.Event.Event(name, date, hostID, location)
+        newEvent = Models.Event.Event(name, date, currentUserId, location)
         eventsData.createEvent(newEvent)
         return jsonify({'message' : 'Event Created.'})
 
@@ -103,6 +103,7 @@ def createNewEvent(token, currentUserId, name, date, hostID, location):
 
 def cancelEvent(token, currentUserId, eventId):
     if Authentication.isTokenValid(token, currentUserId):
+        print(eventId)
         cancelled = eventsData.cancelEvent(eventId)
 
         if(cancelled):

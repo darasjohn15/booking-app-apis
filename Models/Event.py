@@ -9,6 +9,8 @@ class Event:
         self.date = date
         self.hostID = userId
         self.active = True
+        self.performers = []
+        self.requestedPerformers = []
 
     def printOutEventInfo(self, event):
         print('')
