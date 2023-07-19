@@ -30,22 +30,33 @@ def get_all_users(currentUserId):
     return Controller.getUsers(token, currentUserId)
 
 # Get A Single User by UserID
-@app.route('/user/<currentUserId>/<userId>', methods=['GET'])
+@app.route('/users/<currentUserId>/<userId>', methods=['GET'])
 def get_user(currentUserId, userId):
     token = request.headers['x-access-token']
     return Controller.getUser(token, currentUserId, userId)
 
 # Create a New User
-@app.route('/user/<currentUserId>', methods=['POST'])
-def create_user(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.createNewUser(token, currentUserId, request.json['firstName'], request.json['lastName'], request.json['age'])
+@app.route('/users', methods=['POST'])
+def create_user():
+    return Controller.createNewUser(request.json)
 
 # Deactivate User
-@app.route('/user/<currentUserId>/<userId>', methods=['DELETE'])
-def deactivate_user(currentUserId, userId):
+@app.route('/users/<currentUserId>', methods=['DELETE'])
+def deactivate_user(currentUserId):
     token = request.headers['x-access-token']
-    return Controller.deactivateUser(token, currentUserId, userId)
+    return Controller.deactivateUser(token, currentUserId)
+
+# Edit User Info
+@app.route('/users/<currentUserId>', methods=['PUT'])
+def edit_user_info(currentUserId):
+    token = request.headers['x-access-token']
+    return Controller.editUserInfo(token, currentUserId, request.json)
+
+# Change User Password
+@app.route('/users/password/<currentUserId>', methods=['PUT'])
+def change_user_password(currentUserId):
+    token = request.headers['x-access-token']
+    return Controller.changePassword(token, currentUserId, request.json)
 
 # =======================================================================
 #  
@@ -70,6 +81,13 @@ def get_events_by_location(currentUserId):
     location = str(request.args.get('location'))
     token = request.headers['x-access-token']
     return Controller.getEventsByLocation(token, currentUserId, location)
+
+# Get Event Details
+@app.route('/events/eventDetails/<currentUserId>', methods=['GET'])
+def get_event_details(currentUserId):
+    token = request.headers['x-access-token']
+    eventId = request.args.get('eventId')
+    return Controller.getEvent(token, currentUserId, eventId)
 
 # Get Events By Host
 @app.route('/events/host/<currentUserId>', methods=['GET'])
@@ -120,7 +138,7 @@ def get_event_requesteds_performers(currentUserId):
 @app.route('/events/request/<currentUserId>', methods=['GET'])
 def request_performer(currentUserId):
     token = request.headers['x-access-token']
-    return Controller.requestEvent(token, currentUserId, request.args.get('eventId'), request.args.get('userId'))
+    return Controller.requestEvent(token, currentUserId, request.args.get('eventId'))
 
 # Book a Performer
 @app.route('/events/approve/<currentUserId>', methods=['GET'])
@@ -135,7 +153,7 @@ def deny_performer(currentUserId):
     return Controller.denyPerformer(token, currentUserId, request.args.get('eventId'), request.args.get('userId'))
 
 # Remove a Performer from Event
-@app.route('/events/remove<currentUserId>', methods=['GET'])
+@app.route('/events/remove/<currentUserId>', methods=['GET'])
 def remove_performer(currentUserId):
     token = request.headers['x-access-token']
     return Controller.removePerformer(token, currentUserId, request.args.get('eventId'), request.args.get('userId'))

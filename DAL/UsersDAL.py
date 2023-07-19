@@ -21,7 +21,7 @@ class UsersDAL(DatabaseObject):
             
     def getUserByUsername(self, userName):
         for x in self._data:
-            if (userName == x['userName']):
+            if (userName == x['userName'] and x['active']):
                 return x
 
     def updateUser(self, user):
@@ -52,6 +52,35 @@ class UsersDAL(DatabaseObject):
             print('')
             print('Invalid User ID...')
             print('')
+
+    def editUser(self, userId, firstName, lastName, email, age):
+        for x in self._data:
+            if (x['id'] == userId):
+                print('Users DAL: User Found!')
+                x['firstName'] = firstName
+                x['lastName'] = lastName
+                x['email'] = email
+                x['age'] = age
+                self.save()
+                self.reload()
+                print('Users DAL: User Updated!')
+                break
+
+    def getPassword(self, userId):
+        for x in self._data:
+            if (x['id'] == userId):
+                print('Users DAL: User Found!')
+                return x['password']
+
+    def changePassword(self, userId, newPassword):
+        for x in self._data:
+            if (x['id'] == userId):
+                print('Users DAL: User Found!')
+                x['password'] = newPassword
+                self.save()
+                self.reload()
+                print('Users DAL: Password Updated!')
+                break
 
     def getUserCount(self):
         print('Database Class: Data length is ' + str(len(self._data)))

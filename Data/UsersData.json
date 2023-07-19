@@ -1,13 +1,14 @@
 {
+    "_fileName": "./Data/UsersData.json",
     "_data": [
         {
             "userName": "djohnson",
             "id": "darasjohnson",
-            "email": "darasjohnson@outlook.com",
+            "email": "daras.john15@gmail.com",
             "firstName": "Daras",
             "password": "pass123",
             "lastName": "Johnson",
-            "active": false,
+            "active": true,
             "age": "28"
         },
         {
@@ -59,7 +60,96 @@
             "id": "774566055902553288295920904439485188",
             "userName": "testuser5",
             "password": "pass123"
+        },
+        {
+            "firstName": "TestFirstName",
+            "lastName": "TestLastName",
+            "email": "test@test.com",
+            "age": "28",
+            "active": true,
+            "id": "305028980234004582208155454962748011173",
+            "userName": "testUsername",
+            "password": "testPassword"
+        },
+        {
+            "firstName": "TestFirstName",
+            "lastName": "TestLastName",
+            "email": "test@test.com",
+            "age": "28",
+            "active": true,
+            "id": "261643757356113002073221039337539995347",
+            "userName": "testUsername",
+            "password": "testPassword"
+        },
+        {
+            "firstName": "TestFirstName",
+            "lastName": "TestLastName",
+            "email": "test@test.com",
+            "age": "28",
+            "active": true,
+            "id": "191136884194034174258374103542924862814",
+            "userName": "testUsername",
+            "password": "testPassword"
+        },
+        {
+            "firstName": "TestFirstName",
+            "lastName": "TestLastName",
+            "email": "test@test.com",
+            "age": "28",
+            "active": true,
+            "id": "77584774170173342487995901638904705994",
+            "userName": "testUsername",
+            "password": "testPassword"
+        },
+        {
+            "firstName": "TestFirstName",
+            "lastName": "TestLastName",
+            "email": "test@test.com",
+            "age": "28",
+            "active": true,
+            "id": "85865489306963228263693490522924035428",
+            "userName": "testUsername",
+            "password": "testPassword"
+        },
+        {
+            "firstName": "TestFirstName",
+            "lastName": "TestLastName",
+            "email": "test@test.com",
+            "age": "28",
+            "active": true,
+            "id": "62340287159159619501175083959870289394",
+            "userName": "testUsername",
+            "password": "testPassword"
+        },
+        {
+            "firstName": "TestFirstName",
+            "lastName": "TestLastName",
+            "email": "test@test.com",
+            "age": "28",
+            "active": true,
+            "id": "249541524347808254152690695793179299850",
+            "userName": "testUsername",
+            "password": "testPassword"
+        },
+        {
+            "firstName": "TestFirstName",
+            "lastName": "TestLastName",
+            "email": "test@test.com",
+            "age": "28",
+            "active": true,
+            "id": "114212633178346962475057385002581935763",
+            "userName": "testUsername",
+            "password": "testPassword"
+        },
+        {
+            "firstName": "TestFirstName",
+            "lastName": "TestLastName",
+            "email": "test@test.com",
+            "age": "28",
+            "active": true,
+            "id": "277139919011578861524179822370529123885",
+            "userName": "testUsername",
+            "password": "testPassword"
         }
-    ],
-    "_fileName": "UsersDatabase.json"
+    ]
 }

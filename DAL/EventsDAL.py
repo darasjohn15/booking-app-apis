@@ -89,6 +89,11 @@ class EventsDAL(DatabaseObject):
                 results.append(x)
         
         return results
+
+    def getEvent(self, id):
+        for x in self._data:
+            if (x['id'] == id):
+                return x
     
     def getEventsByHost(self, host):
         results = []
