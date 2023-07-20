@@ -2,11 +2,11 @@
     "_fileName": "./Data/EventsData.json",
     "_data": [
         {
-            "name": "New Faces 2023",
+            "name": "",
             "id": "1",
-            "date": "06/02/2023",
+            "date": "",
             "hostID": "darasjohnson",
-            "location": "Friends on Ponce",
+            "location": "",
             "active": true,
             "performers": [
                 "darasjohnson"

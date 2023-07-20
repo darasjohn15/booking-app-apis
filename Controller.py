@@ -140,10 +140,19 @@ def getEventsByDate(token, currentUserId, month, year):
     
     return jsonify({'message' : 'Invalid Token.'}), 401
 
-def createNewEvent(token, currentUserId, name, date, location):
+def createNewEvent(token, currentUserId, requestBody):
     if Authentication.isTokenValid(token, currentUserId):
+        # Get request values
+        name = requestBody['name']
+        date = requestBody['date']
+        location = requestBody['location']
+
+        #Create Event Instance
         newEvent = Models.Event.Event(name, date, currentUserId, location)
+
+        #Save to Database
         eventsData.createEvent(newEvent)
+
         return jsonify({'message' : 'Event Created.'}), 200
 
     
@@ -151,7 +160,6 @@ def createNewEvent(token, currentUserId, name, date, location):
 
 def cancelEvent(token, currentUserId, eventId):
     if Authentication.isTokenValid(token, currentUserId):
-        print(eventId)
         cancelled = eventsData.cancelEvent(eventId)
 
         if(cancelled):
@@ -160,6 +168,20 @@ def cancelEvent(token, currentUserId, eventId):
             return jsonify({'message': 'Could Not Cancelled'}), 400
         
     return jsonify({'message' : 'Invalid Token.'}), 401
+
+def editEvent(token, currentUserId, eventId, requestBody):
+    if Authentication.isTokenValid(token, currentUserId):
+        # Get Request Values
+        eventName = requestBody['name']
+        eventLocation = requestBody['location']
+        eventDate = requestBody['date']
+
+        #Update Database
+        eventsData.editEvent(eventId, eventName, eventLocation, eventDate)
+
+        return jsonify({'message': 'Event Updated!'}), 200
+
+    return jsonify({'message': 'Invalid Token.'}), 401
 
 def getEventPerformers(token, currentUserId, eventId):
     if Authentication.isTokenValid(token, currentUserId):

@@ -116,11 +116,16 @@ def create_event(currentUserId):
     return Controller.createNewEvent(token, currentUserId, request.json['name'], request.json['date'], request.json['location'])
 
 # Cancel Event
-@app.route('/events/cancel/<currentUserId>', methods=['GET'])
-def cancel_event(currentUserId):
+@app.route('/events/cancel/<currentUserId>/<eventId>', methods=['DELETE'])
+def cancel_event(currentUserId, eventId):
     token = request.headers['x-access-token']
-    eventId = request.args.get('eventId')
     return Controller.cancelEvent(token, currentUserId, eventId)
+
+# Edit Event Info
+@app.route('/events/<currentUserId>/<eventId>', methods=['PUT'])
+def edit_event(currentUserId, eventId):
+    token = request.headers['x-access-token']
+    return Controller.editEvent(token, currentUserId, eventId, request.json)
 
 # Get Performers
 @app.route('/events/performers/<currentUserId>', methods=['GET'])

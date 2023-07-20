@@ -55,6 +55,18 @@ class EventsDAL(DatabaseObject):
                 print('Events DAL: Event ' + eventID + ' could not found.')
             
             return False
+    
+    def editEvent(self, eventId, eventName, eventLocation, eventDate):
+        for x in self._data:
+            if (x['id'] == eventId):
+                x['name'] = eventName
+                x['location'] = eventLocation
+                x['date'] = eventDate
+                
+                self.save()
+                self.reload()
+
+                print('Event Updated!')
 
     def getEventsByLocation(self, location):
         hasEvents = False
