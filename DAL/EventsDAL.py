@@ -55,6 +55,31 @@ class EventsDAL(DatabaseObject):
                 print('Events DAL: Event ' + eventID + ' could not found.')
             
             return False
+
+    def activateEvent(self, eventID):
+        activated = False
+        found = False
+        for x in self._data:
+            if (x['id'] == eventID):
+                found = True
+                print('Events DAL: Event ' + eventID + ' found.')
+
+                x['active'] = True
+                activated = True
+                print('Events DAL: Event ' + eventID + ' activated.')
+
+        if (activated):
+            self.save()
+            self.reload()
+            print('Events DAL: Database saved and reloaded.')
+            return True
+        else:
+            if (found):
+                print('Events DAL: Event ' + eventID + ' could not be activated.')
+            else:
+                print('Events DAL: Event ' + eventID + ' could not found.')
+            
+            return False
     
     def editEvent(self, eventId, eventName, eventLocation, eventDate):
         for x in self._data:

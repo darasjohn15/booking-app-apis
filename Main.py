@@ -13,9 +13,7 @@ CORS(app)
 
 @app.route('/login', methods=['POST'])
 def login():
-    response = make_response(Controller.auth(request.json['userName'], request.json['password']))
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    return response
+    return Controller.auth(request.json)
 
 # =======================================================================
 #  
@@ -83,10 +81,9 @@ def get_events_by_location(currentUserId):
     return Controller.getEventsByLocation(token, currentUserId, location)
 
 # Get Event Details
-@app.route('/events/eventDetails/<currentUserId>', methods=['GET'])
-def get_event_details(currentUserId):
+@app.route('/events/<currentUserId>/<eventId>', methods=['GET'])
+def get_event_details(currentUserId, eventId):
     token = request.headers['x-access-token']
-    eventId = request.args.get('eventId')
     return Controller.getEvent(token, currentUserId, eventId)
 
 # Get Events By Host
@@ -110,16 +107,19 @@ def get_events_by_date(currentUserId):
 @app.route('/events/<currentUserId>', methods=['POST'])
 def create_event(currentUserId):
     token = request.headers['x-access-token']
-    print('Main: Event Name = ' + request.json['name'])
-    print('Main: Event Location = ' + request.json['location'])
-    print('Main: Event Date = ' + request.json['date'])
-    return Controller.createNewEvent(token, currentUserId, request.json['name'], request.json['date'], request.json['location'])
+    return Controller.createNewEvent(token, currentUserId, request.json)
 
 # Cancel Event
-@app.route('/events/cancel/<currentUserId>/<eventId>', methods=['DELETE'])
+@app.route('/events/cancel/<currentUserId>/<eventId>', methods=['GET'])
 def cancel_event(currentUserId, eventId):
     token = request.headers['x-access-token']
     return Controller.cancelEvent(token, currentUserId, eventId)
+
+# Activate Event
+@app.route('/events/activate/<currentUserId>/<eventId>', methods=['GET'])
+def activate_event(currentUserId, eventId):
+    token = request.headers['x-access-token']
+    return Controller.activateEvent(token, currentUserId, eventId)
 
 # Edit Event Info
 @app.route('/events/<currentUserId>/<eventId>', methods=['PUT'])

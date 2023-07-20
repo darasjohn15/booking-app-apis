@@ -2,22 +2,25 @@
     "_fileName": "./Data/EventsData.json",
     "_data": [
         {
-            "name": "",
+            "name": "Miss Make It Happen",
             "id": "1",
-            "date": "",
+            "date": "08/01/2023",
             "hostID": "darasjohnson",
-            "location": "",
+            "location": "Future ATL",
             "active": true,
             "performers": [
-                "darasjohnson"
+                "darasjohnson",
+                "rhuntsherman"
             ],
-            "requestedPerformers": []
+            "requestedPerformers": [
+                "ashlynwoods"
+            ]
         },
         {
             "name": "New Faces 2024",
             "id": "2",
             "date": "07/25/2024",
-            "hostID": "darasjohnson",
+            "hostID": "rhuntsherman",
             "location": "Friends on Ponce",
             "active": true,
             "performers": [
@@ -25,7 +28,7 @@
             ],
             "requestedPerformers": [
                 "darasjohnson",
-                "darasjohnson"
+                "ashlynwoods"
             ]
         },
         {
@@ -34,161 +37,37 @@
             "date": "04/09/2019",
             "hostID": "ashlynwoods",
             "location": "Atlanta",
+            "active": false,
+            "performers": [
+                "darasjohnson"
+            ],
+            "requestedPerformers": []
+        },
+        {
+            "id": "162129373545883178801392124292092135229",
+            "name": "Miss New Faces 2023",
+            "location": "Friends on Ponce",
+            "date": "09/02/2023",
+            "hostID": "darasjohnson",
+            "active": true,
+            "performers": [
+                "rhuntsherman"
+            ],
+            "requestedPerformers": [
+                "ashlynwoods"
+            ]
+        },
+        {
+            "id": "250778473572510238248672958543463790620",
+            "name": "Dancing Dolls Pageant",
+            "location": "Splash Night Club",
+            "date": "10/01/2023",
+            "hostID": "ashlynwoods",
             "active": true,
             "performers": [],
             "requestedPerformers": [
                 "darasjohnson"
             ]
-        },
-        {
-            "name": "Test Pageant",
-            "id": "257080206287217513841276524383326458782",
-            "date": "06/07/2010",
-            "hostID": "rhuntsherman",
-            "location": "Atlanta",
-            "active": true,
-            "performers": [],
-            "requestedPerformers": []
-        },
-        {
-            "id": "186035921253834098259451092092108096622",
-            "date": "04/08/2020",
-            "hostID": "ascott",
-            "name": "Test Pageant",
-            "location": "LaPlace, LA",
-            "active": true,
-            "performers": [],
-            "requestedPerformers": []
-        },
-        {
-            "id": "108455246624220363694771489689948389257",
-            "name": "Test",
-            "location": "05/01/2023",
-            "date": "darasjohnson",
-            "hostID": "Atlanta",
-            "performers": [],
-            "active": true,
-            "requestedPerformers": []
-        },
-        {
-            "id": "187886223812639381488011025581751282421",
-            "name": "Test2",
-            "location": "Atlanta",
-            "date": "05/01/2023",
-            "hostID": "darasjohnson",
-            "performers": [],
-            "active": false,
-            "requestedPerformers": []
-        },
-        {
-            "id": "156135719036942234730337087764310141436",
-            "name": "Test Name from Postman",
-            "location": "Test Location from Postman",
-            "date": "07/13/2023",
-            "hostID": "darasjohnson",
-            "active": true,
-            "performers": [],
-            "requestedPerformers": []
-        },
-        {
-            "id": "133119309095574645717313478508327055909",
-            "name": "Test Name2 from Postman",
-            "location": "Test Location2 from Postman",
-            "date": "07/13/2023",
-            "hostID": "darasjohnson",
-            "active": true,
-            "performers": [],
-            "requestedPerformers": []
-        },
-        {
-            "id": "188108684017598743387156340325490752156",
-            "name": "Test23",
-            "location": "Test Location",
-            "date": "07/12/2022",
-            "hostID": "darasjohnson",
-            "active": false,
-            "performers": [],
-            "requestedPerformers": []
-        },
-        {
-            "id": "277953533112751749551284237986992521183",
-            "name": "Test24",
-            "location": "From UI",
-            "date": "07/13/2023",
-            "hostID": "darasjohnson",
-            "active": true,
-            "performers": [],
-            "requestedPerformers": []
-        },
-        {
-            "id": "20606484373454274062151772298149437291",
-            "name": "Test25",
-            "location": "From UI",
-            "date": "07/13/2023",
-            "hostID": "darasjohnson",
-            "active": true,
-            "performers": [],
-            "requestedPerformers": []
-        },
-        {
-            "id": "133985283487321061192475180073929647924",
-            "name": "Test26",
-            "location": "From UI",
-            "date": "07/13/2023",
-            "hostID": "darasjohnson",
-            "active": true,
-            "performers": [],
-            "requestedPerformers": []
-        },
-        {
-            "id": "233940232976157908241067877352366480792",
-            "name": "Test27",
-            "location": "From UI",
-            "date": "07/13/2023",
-            "hostID": "darasjohnson",
-            "active": true,
-            "performers": [],
-            "requestedPerformers": []
-        },
-        {
-            "id": "220981136370658278474830837234676479227",
-            "name": "Test28",
-            "location": "From UI",
-            "date": "07/13/2023",
-            "hostID": "dscott",
-            "active": true,
-            "performers": [],
-            "requestedPerformers": []
-        },
-        {
-            "id": "86938547997064088406461257611080979597",
-            "name": "New Event",
-            "location": "From UI",
-            "date": "07/13/2023",
-            "hostID": "darasjohnson",
-            "active": true,
-            "performers": [],
-            "requestedPerformers": []
-        },
-        {
-            "id": "242429361825882786235465280577462022100",
-            "name": "Test 39",
-            "location": "Test",
-            "date": "07/13/2023",
-            "hostID": "darasjohnson",
-            "active": false,
-            "performers": [],
-            "requestedPerformers": []
-        },
-        {
-            "id": "44059745061333730058528223653065285642",
-            "name": "Daras Test",
-            "location": "Test UI",
-            "date": "Test Date",
-            "hostID": "darasjohnson",
-            "active": false,
-            "performers": [],
-            "requestedPerformers": []
         }
     ]
 }

@@ -11,8 +11,11 @@ usersData = DAL.UsersDAL.UsersDAL("UsersData.json")
 #Get Events Data
 eventsData = DAL.EventsDAL.EventsDAL("EventsData.json")
 
-def auth(userName, password):
-    
+def auth(requestBody):
+    #Get request values
+    userName = requestBody['userName']
+    password = requestBody['password']
+
     #Get user data based on userName
     user = usersData.getUserByUsername(userName)
 
@@ -166,6 +169,17 @@ def cancelEvent(token, currentUserId, eventId):
             return jsonify({'message' : 'Event Cancelled.'}), 200
         else:
             return jsonify({'message': 'Could Not Cancelled'}), 400
+        
+    return jsonify({'message' : 'Invalid Token.'}), 401
+
+def activateEvent(token, currentUserId, eventId):
+    if Authentication.isTokenValid(token, currentUserId):
+        activated = eventsData.activateEvent(eventId)
+
+        if(activated):
+            return jsonify({'message' : 'Event Activated.'}), 200
+        else:
+            return jsonify({'message': 'Could Not Activated'}), 400
         
     return jsonify({'message' : 'Invalid Token.'}), 401
 
