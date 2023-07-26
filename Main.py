@@ -62,6 +62,18 @@ def change_user_password(currentUserId):
     token = request.headers['x-access-token']
     return Controller.changePassword(token, currentUserId, request.json)
 
+# Get User Messages
+@app.route('/users/messages/<currentUserId>', methods=['GET'])
+def get_user_messages(currentUserId):
+    token = request.headers['x-access-token']
+    return Controller.getMessages(token, currentUserId)
+
+# Send Message
+@app.route('/users/messages/<currentUserId>', methods=['POST'])
+def send_user_message(currentUserId):
+    token = request.headers['x-access-token']
+    return Controller.sendMessage(token, currentUserId, request.json)
+
 # =======================================================================
 #  
 # Events APIs

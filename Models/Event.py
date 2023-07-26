@@ -11,9 +11,3 @@ class Event:
         self.active = True
         self.performers = []
         self.requestedPerformers = []
-
-    def printOutEventInfo(self, event):
-        print('')
-        print('Event: ' + event['name'])
-        print('Location: ' + event['location'])
-        print('Date: ' + event['date'])

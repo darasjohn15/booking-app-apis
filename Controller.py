@@ -1,5 +1,6 @@
 import Models.User
 import Models.Event
+import Models.Message
 import DAL.UsersDAL 
 import DAL.EventsDAL
 from flask import *
@@ -105,6 +106,29 @@ def changePassword(token, currentUserId, requestBody):
         usersData.changePassword(currentUserId, requestNewPassword)
 
         return jsonify({'message': "Password Updated!"}), 200
+
+    return jsonify({'message': 'Invalid Token.'}), 401
+
+def getMessages(token, currentUserId):
+    if Authentication.isTokenValid(token, currentUserId):
+        data_set = usersData.getMessages(currentUserId)
+        return jsonify(data_set)
+
+    return jsonify({'message': 'Invalid Token.'}), 401
+
+def sendMessage(token, currentUserId, requestBody):
+
+    if Authentication.isTokenValid(token, currentUserId):
+        #Get Request Values
+        recipientUserId = requestBody['userId']
+        subject = requestBody['subject']
+        message = requestBody['message']
+
+        #Create Message
+        newMessage = Models.Message.Message(subject, message, recipientUserId)
+
+        usersData.addMessage(newMessage)
+        return jsonify({'message': 'Message Sent!'}), 200
 
     return jsonify({'message': 'Invalid Token.'}), 401
 

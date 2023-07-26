@@ -9,7 +9,24 @@
             "password": "pass123",
             "lastName": "Johnson",
             "active": true,
-            "age": "28"
+            "age": "28",
+            "messages": [
+                {
+                    "messageId": "",
+                    "date": "",
+                    "subject": "",
+                    "message": "",
+                    "read": false
+                },
+                {
+                    "messageId": "261589833640317281276700549928262164366",
+                    "date": "7/25/2023",
+                    "subject": "Test Subject",
+                    "message": "This is a test message",
+                    "userId": "darasjohnson",
+                    "read": false
+                }
+            ]
         },
         {
             "userName": "rsherman",
@@ -19,7 +36,8 @@
             "password": "pass123",
             "lastName": "Hunt-Sherman",
             "active": true,
-            "age": "28"
+            "age": "28",
+            "messages": []
         },
         {
             "userName": "ascott",
@@ -29,7 +47,8 @@
             "password": "pass123",
             "lastName": "Scott",
             "active": true,
-            "age": "47"
+            "age": "47",
+            "messages": []
         },
         {
             "userName": "dscott",
@@ -39,7 +58,8 @@
             "password": "pass123",
             "lastName": "Scott",
             "active": true,
-            "age": "47"
+            "age": "47",
+            "messages": []
         },
         {
             "userName": "awoods",
@@ -49,7 +69,8 @@
             "password": "pass123",
             "lastName": "Woods",
             "active": true,
-            "age": "18"
+            "age": "18",
+            "messages": []
         },
         {
             "firstName": "Test",
@@ -59,7 +80,8 @@
             "active": true,
             "id": "774566055902553288295920904439485188",
             "userName": "testuser5",
-            "password": "pass123"
+            "password": "pass123",
+            "messages": []
         },
         {
             "firstName": "TestFirstName",
@@ -69,7 +91,8 @@
             "active": true,
             "id": "305028980234004582208155454962748011173",
             "userName": "testUsername",
-            "password": "testPassword"
+            "password": "testPassword",
+            "messages": []
         },
         {
             "firstName": "TestFirstName",
@@ -79,7 +102,8 @@
             "active": true,
             "id": "261643757356113002073221039337539995347",
             "userName": "testUsername",
-            "password": "testPassword"
+            "password": "testPassword",
+            "messages": []
         },
         {
             "firstName": "TestFirstName",
@@ -89,7 +113,8 @@
             "active": true,
             "id": "191136884194034174258374103542924862814",
             "userName": "testUsername",
-            "password": "testPassword"
+            "password": "testPassword",
+            "messages": []
         },
         {
             "firstName": "TestFirstName",
@@ -99,7 +124,8 @@
             "active": true,
             "id": "77584774170173342487995901638904705994",
             "userName": "testUsername",
-            "password": "testPassword"
+            "password": "testPassword",
+            "messages": []
         },
         {
             "firstName": "TestFirstName",
@@ -109,7 +135,8 @@
             "active": true,
             "id": "85865489306963228263693490522924035428",
             "userName": "testUsername",
-            "password": "testPassword"
+            "password": "testPassword",
+            "messages": []
         },
         {
             "firstName": "TestFirstName",
@@ -119,7 +146,8 @@
             "active": true,
             "id": "62340287159159619501175083959870289394",
             "userName": "testUsername",
-            "password": "testPassword"
+            "password": "testPassword",
+            "messages": []
         },
         {
             "firstName": "TestFirstName",
@@ -129,7 +157,8 @@
             "active": true,
             "id": "249541524347808254152690695793179299850",
             "userName": "testUsername",
-            "password": "testPassword"
+            "password": "testPassword",
+            "messages": []
         },
         {
             "firstName": "TestFirstName",
@@ -139,7 +168,8 @@
             "active": true,
             "id": "114212633178346962475057385002581935763",
             "userName": "testUsername",
-            "password": "testPassword"
+            "password": "testPassword",
+            "messages": []
         },
         {
             "firstName": "TestFirstName",
@@ -149,7 +179,8 @@
             "active": true,
             "id": "277139919011578861524179822370529123885",
             "userName": "testUsername",
-            "password": "testPassword"
+            "password": "testPassword",
+            "messages": []
         }
     ]
 }

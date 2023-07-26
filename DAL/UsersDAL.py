@@ -104,3 +104,17 @@ class UsersDAL(DatabaseObject):
 
     def getUserCount(self):
         print('Database Class: Data length is ' + str(len(self._data)))
+
+    def getMessages(self, userId):
+        for x in self._data:
+            if (x['id'] == userId):
+                print('Users DAL: User Found!')
+                return x['messages']
+
+    def addMessage(self, message):
+        for x in self._data:
+            if( x['id'] == message.userId):
+                x['messages'].append(message)
+                self.save()
+                self.reload()
+                print('Users DAL: Message Delivered!')
