@@ -52,6 +52,26 @@ class UsersDAL(DatabaseObject):
             print('')
             print('Invalid User ID...')
             print('')
+    
+    def activateUser(self, id):
+        index = 0
+        activated = False
+        
+        for x in self._data:
+            if (x['id'] == id):
+                x['active'] = True
+                self.save()
+                self.reload()
+                activated = True
+                print('')
+                print('User Activated!')
+                print('')
+                break
+
+        if (not activated):
+            print('')
+            print('Invalid User ID...')
+            print('')
 
     def editUser(self, userId, firstName, lastName, email, age):
         for x in self._data:

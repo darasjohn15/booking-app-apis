@@ -44,6 +44,12 @@ def deactivate_user(currentUserId):
     token = request.headers['x-access-token']
     return Controller.deactivateUser(token, currentUserId)
 
+# Activate User
+@app.route('/users/activate/<currentUserId>', methods=['GET'])
+def activate_user(currentUserId):
+    token = request.headers['x-access-token']
+    return Controller.activateUser(token, currentUserId)
+
 # Edit User Info
 @app.route('/users/<currentUserId>', methods=['PUT'])
 def edit_user_info(currentUserId):
@@ -162,7 +168,6 @@ def deny_performer(currentUserId):
 def remove_performer(currentUserId):
     token = request.headers['x-access-token']
     return Controller.removePerformer(token, currentUserId, request.args.get('eventId'), request.args.get('userId'))
-
 
 if __name__ == '__main__':
     app.run(port=8085)

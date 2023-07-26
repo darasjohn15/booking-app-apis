@@ -66,8 +66,19 @@
             "active": true,
             "performers": [],
             "requestedPerformers": [
+                "darasjohnson",
                 "darasjohnson"
             ]
+        },
+        {
+            "id": "328367965455587474157398978368145742459",
+            "name": "Atlanta All-Stars",
+            "location": "Blake's on the Park ",
+            "date": "09/19/2023",
+            "hostID": "darasjohnson",
+            "active": true,
+            "performers": [],
+            "requestedPerformers": []
         }
     ]
 }

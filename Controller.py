@@ -69,6 +69,13 @@ def deactivateUser(token, currentUserId):
     
     return jsonify({'message' : 'Invalid Token.'}), 401
 
+def activateUser(token, currentUserId):
+    if Authentication.isTokenValid(token, currentUserId):
+        usersData.activateUser(currentUserId)
+        return jsonify({ 'message' : 'User Activated'}), 200
+    
+    return jsonify({'message' : 'Invalid Token.'}), 401
+
 def editUserInfo(token, currentUserId, requestBody):
     if Authentication.isTokenValid(token, currentUserId):
         #Get New Values
