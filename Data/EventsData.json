@@ -32,7 +32,7 @@
             ]
         },
         {
-            "name": "Crazy Girl Pageant",
+            "name": "That Pageant",
             "id": "311607268961562469698349551437085605583",
             "date": "04/09/2019",
             "hostID": "ashlynwoods",
@@ -46,7 +46,7 @@
         {
             "id": "162129373545883178801392124292092135229",
             "name": "Miss New Faces 2023",
-            "location": "Friends on Ponce",
+            "location": "Venue 1",
             "date": "09/02/2023",
             "hostID": "darasjohnson",
             "active": true,
@@ -60,7 +60,7 @@
         {
             "id": "250778473572510238248672958543463790620",
             "name": "Dancing Dolls Pageant",
-            "location": "Splash Night Club",
+            "location": "Venue 2",
             "date": "10/01/2023",
             "hostID": "ashlynwoods",
             "active": true,
@@ -73,7 +73,7 @@
         {
             "id": "328367965455587474157398978368145742459",
             "name": "Atlanta All-Stars",
-            "location": "Blake's on the Park ",
+            "location": "Venue 1",
             "date": "09/19/2023",
             "hostID": "darasjohnson",
             "active": true,
