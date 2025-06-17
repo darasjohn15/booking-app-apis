@@ -3,34 +3,50 @@ import Helpers.DateHelper
 
 class EventsDAL(DatabaseObject):
 
-    def printOutEventInfo(self, event):
-        print('')
-        print('Event: ' + event['name'])
-        print('Location: ' + event['location'])
-        print('Date: ' + event['date'])
-
-    def getMyEvents(self, userId):
-        hasEvents = False
-        for x in self._data:
-            if (x['hostID'] == userId):
-                self.printOutEventInfo(x)
-                hasEvents = True
-
-        if (not hasEvents):
-            print('')
-            print('You don\'t have any events...')
-            print('')
-
-        print('')
-
-    def createEvent(self, event):
+    def add_event(self, event):
         self._data.append(event)
         self.save()
         self.reload()
 
         print('Event Created!')
         print('')
+    
+    def get_events(self):
+        return self._data
+    
+    def get_event(self, event_id):
+        for x in self._data:
+            if (x['id'] == event_id):
+                return x
+      
+            
+    def add_application(self, event_id, application):
+        for x in self._data:
+            if (x['id'] == event_id):
+                x['applications'].append(application)
+                self.save()
+                self.reload()
 
+    def approve_application(self, event_id, user_id):
+        approved = False
+
+        for x in self._data:
+            if (x['id'] == event_id):
+                x['performers'].append(user_id)
+                approved = True
+                
+                applications = x['applications']
+                for application in applications:
+                    if(application['user_id'] == user_id):
+                        applications.remove(application)
+                        break
+
+                self.save()
+                self.reload()
+                break
+
+        return approved
+    
     def cancelEvent(self, eventID):
         deactivated = False
         found = False
@@ -127,17 +143,9 @@ class EventsDAL(DatabaseObject):
         
         return results
 
-    def getEvent(self, id):
-        for x in self._data:
-            if (x['id'] == id):
-                return x
     
-    def getEventsByHost(self, host):
-        results = []
-        for x in self._data:
-            if (x['hostID'] == host):
-                results.append(x)
-        return results
+    
+    
     
     def getEventPerformers(self, eventId):
         for x in self._data:
@@ -165,26 +173,7 @@ class EventsDAL(DatabaseObject):
             
         return False
     
-    def approvePerformer(self, eventId, userId):
-        approved = False
 
-        for x in self._data:
-            if (x['id'] == eventId):
-                x['performers'].append(userId)
-                approved = True
-                
-                requestedPerformers = x['requestedPerformers']
-                for performer in requestedPerformers:
-                    if(performer == userId):
-                        requestedPerformers.remove(performer)
-                        break
-
-                
-                self.save()
-                self.reload()
-                break
-
-        return approved
     
     def removePerformer(self, eventId, userId):
         removed = False

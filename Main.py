@@ -1,185 +1,118 @@
 from flask import *
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import Controller
+from auth_utils import token_required
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": ["http://localhost:4200","http://127.0.0.1:4200"]}}, supports_credentials=True)
 
 # =======================================================================
 #  
-# Authentication API
+# Authentication Endpoints
 #
 # ======================================================================= 
 
 @app.route('/login', methods=['POST'])
 def login():
-    return Controller.auth(request.json)
+    return Controller.login_user(request.json)
 
 # =======================================================================
 #  
-# Users APIs
+# Users Endpoints
 #
 # ======================================================================= 
 
-# Get All Users
-@app.route('/users/<currentUserId>', methods=['GET'])
-def get_all_users(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.getUsers(token, currentUserId)
-
 # Get A Single User by UserID
-@app.route('/users/<currentUserId>/<userId>', methods=['GET'])
-def get_user(currentUserId, userId):
-    token = request.headers['x-access-token']
-    return Controller.getUser(token, currentUserId, userId)
-
-# Create a New User
-@app.route('/users', methods=['POST'])
-def create_user():
-    return Controller.createNewUser(request.json)
-
-# Deactivate User
-@app.route('/users/<currentUserId>', methods=['DELETE'])
-def deactivate_user(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.deactivateUser(token, currentUserId)
-
-# Activate User
-@app.route('/users/activate/<currentUserId>', methods=['GET'])
-def activate_user(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.activateUser(token, currentUserId)
-
-# Edit User Info
-@app.route('/users/<currentUserId>', methods=['PUT'])
-def edit_user_info(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.editUserInfo(token, currentUserId, request.json)
-
-# Change User Password
-@app.route('/users/password/<currentUserId>', methods=['PUT'])
-def change_user_password(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.changePassword(token, currentUserId, request.json)
-
-# Get User Messages
-@app.route('/users/messages/<currentUserId>', methods=['GET'])
-def get_user_messages(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.getMessages(token, currentUserId)
-
-# Send Message
-@app.route('/users/messages/<currentUserId>', methods=['POST'])
-def send_user_message(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.sendMessage(token, currentUserId, request.json)
+@app.route('/users/<userId>', methods=['GET'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def get_user(userId):
+    return Controller.get_user(userId)
 
 # =======================================================================
 #  
-# Events APIs
+# Events Endpoints
 #
 # ======================================================================= 
 
 # Get All Events
-@app.route('/events/<currentUserId>', methods=['GET'])
-def get_all_events(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.getEvents(token, currentUserId)
-
-@app.route('/events/active/<currentUserId>', methods=['GET'])
-def get_all_active_events(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.getActiveEvents(token, currentUserId)
-
-# Get Events By Location
-@app.route('/events/location/<currentUserId>', methods=['GET'])
-def get_events_by_location(currentUserId):
-    location = str(request.args.get('location'))
-    token = request.headers['x-access-token']
-    return Controller.getEventsByLocation(token, currentUserId, location)
-
-# Get Event Details
-@app.route('/events/<currentUserId>/<eventId>', methods=['GET'])
-def get_event_details(currentUserId, eventId):
-    token = request.headers['x-access-token']
-    return Controller.getEvent(token, currentUserId, eventId)
-
-# Get Events By Host
-@app.route('/events/host/<currentUserId>', methods=['GET'])
-def get_events_by_host(currentUserId):
-    host = str(request.args.get('host'))
-    token = request.headers['x-access-token']
-    return Controller.getEventsByHost(token, currentUserId, host)
-
-# Get Events By Date
-@app.route('/events/date/<currentUserId>', methods=['GET'])
-def get_events_by_date(currentUserId):
-    month = str(request.args.get('month'))
-    year = str(request.args.get('year'))
-    token = request.headers['x-access-token']
-    return Controller.getEventsByDate(token, currentUserId, month, year)
-
-# Get Events By Venue
+@app.route('/events', methods=['GET'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def get_events():
+    user_id = request.user_id  # pulled from token in decorator
+    return Controller.get_events()
 
 # Create New Event 
-@app.route('/events/<currentUserId>', methods=['POST'])
-def create_event(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.createNewEvent(token, currentUserId, request.json)
+@app.route('/events', methods=['POST'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def create_event():
+    request_body = request.json
+    return Controller.create_event(request_body)
 
-# Cancel Event
-@app.route('/events/cancel/<currentUserId>/<eventId>', methods=['GET'])
-def cancel_event(currentUserId, eventId):
-    token = request.headers['x-access-token']
-    return Controller.cancelEvent(token, currentUserId, eventId)
+# Get Event
+@app.route('/events/<eventId>', methods=['GET'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def get_event(eventId):
+    return Controller.get_event(eventId)
 
-# Activate Event
-@app.route('/events/activate/<currentUserId>/<eventId>', methods=['GET'])
-def activate_event(currentUserId, eventId):
-    token = request.headers['x-access-token']
-    return Controller.activateEvent(token, currentUserId, eventId)
+# Get Events By Host
+@app.route('/events/host/<host_id>', methods=['GET'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def get_events_by_host(host_id):
+    return Controller.get_events_by_host(host_id)
 
-# Edit Event Info
-@app.route('/events/<currentUserId>/<eventId>', methods=['PUT'])
-def edit_event(currentUserId, eventId):
-    token = request.headers['x-access-token']
-    return Controller.editEvent(token, currentUserId, eventId, request.json)
+# Get Applications
+@app.route('/events/applications/<event_id>', methods=['GET'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def get_applications(event_id):
+    return Controller.get_applications(event_id)
 
-# Get Performers
-@app.route('/events/performers/<currentUserId>', methods=['GET'])
-def get_event_performers(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.getEventPerformers(token, currentUserId, request.args.get('eventId'))
+# Get Performer Applications
+@app.route('/events/applications/performer/<performer_id>', methods=['GET'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def get_performer_applications(performer_id):
+    return Controller.get_performer_applications(performer_id)
 
-# Get Requested Performers
-@app.route('/events/requested/<currentUserId>', methods=['GET'])
-def get_event_requesteds_performers(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.getEventRequestedPerformers(token, currentUserId, request.args.get('eventId'))
+# Add Application
+@app.route('/events/application', methods=['POST'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def add_application():
+    request_body = request.json
+    return Controller.add_application(request_body)
 
-# Add Requested Performer
-@app.route('/events/request/<currentUserId>', methods=['GET'])
-def request_performer(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.requestEvent(token, currentUserId, request.args.get('eventId'))
+# Approve an Application
+@app.route('/events/applications/approve', methods=['POST'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def approve_application():
+    return Controller.approve_application(request.json)
 
-# Book a Performer
-@app.route('/events/approve/<currentUserId>', methods=['GET'])
-def approve_performer(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.approvePerformer(token, currentUserId, request.args.get('eventId'), request.args.get('userId'))
+# Deny an Application
+@app.route('/events/applications/deny', methods=['POST'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def deny_performer():
+    return Controller.deny_application(request.json)
 
-# Deny a Performer
-@app.route('/events/deny/<currentUserId>', methods=['GET'])
-def deny_performer(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.denyPerformer(token, currentUserId, request.args.get('eventId'), request.args.get('userId'))
+# =======================================================================
+#  
+# Venues Endpoints
+#
+# ======================================================================= 
 
-# Remove a Performer from Event
-@app.route('/events/remove/<currentUserId>', methods=['GET'])
-def remove_performer(currentUserId):
-    token = request.headers['x-access-token']
-    return Controller.removePerformer(token, currentUserId, request.args.get('eventId'), request.args.get('userId'))
+# Get Venues
+@app.route('/venues', methods=['GET'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def get_venues():
+    return Controller.get_venues()
 
 if __name__ == '__main__':
     app.run(port=8085)

@@ -2,13 +2,11 @@ import uuid
 
 class User:
 
-    def __init__(self, firstName, lastName, email, userName, password, age):
-        self.firstName = firstName
-        self.lastName = lastName
+    def __init__(self, name, email, role, password, age):
+        self.id = str(uuid.uuid4().int)
+        self.name = name
         self.email = email
+        self.password = password
+        self.role = role
         self.age = age
         self.active = True
-        self.id = str(uuid.uuid4().int)
-        self.userName = userName
-        self.password = password
-        self.messages = []

@@ -13,15 +13,15 @@ class UsersDAL(DatabaseObject):
     def getUsers(self):
         return self._data
 
-    def getUserById(self, id):
+    def get_user(self, id):
         for x in self._data:
             userid = x['id']
             if(id == userid):
                 return x
             
-    def getUserByUsername(self, userName):
+    def getUserByEmail(self, email):
         for x in self._data:
-            if (userName == x['userName'] and x['active']):
+            if (email == x['email'] and x['active']):
                 return x
 
     def updateUser(self, user):
@@ -118,3 +118,21 @@ class UsersDAL(DatabaseObject):
                 self.save()
                 self.reload()
                 print('Users DAL: Message Delivered!')
+
+    def readMessage(self, userId, messageId):
+        for user in self._data:
+            
+            if (user['id'] == userId):
+                print('Users DAL: User Found!')
+
+                for message in user['messages']:
+                    
+                    if (message['id'] == messageId):
+                        print('Users DAL: Message Found!')
+                        message['read'] = True
+                        self.save()
+                        self.reload()
+                        print('Users DAL: Message Read!')
+                        break
+                
+                break

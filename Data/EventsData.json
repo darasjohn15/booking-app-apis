@@ -2,83 +2,46 @@
     "_fileName": "./Data/EventsData.json",
     "_data": [
         {
-            "name": "Miss Make It Happen",
-            "id": "1",
-            "date": "08/01/2023",
-            "hostID": "darasjohnson",
-            "location": "Future ATL",
+            "id": "244314363709625557915952043874775812685",
+            "title": "Test Event from Postman 3",
+            "date": "06/12/2025",
+            "host_id": "1",
+            "venue_id": "1",
+            "description": "Test Description",
             "active": true,
-            "performers": [
-                "darasjohnson",
-                "rhuntsherman"
+            "applications": [
+                {
+                    "id": "145928120252322840710051284908658012216",
+                    "event_id": "244314363709625557915952043874775812685",
+                    "event_title": "Test Event from Postman 3",
+                    "performer_id": "2",
+                    "performer_name": "Test Performer",
+                    "status": "pending"
+                }
             ],
-            "requestedPerformers": [
-                "ashlynwoods"
-            ]
+            "performers": []
         },
         {
-            "name": "New Faces 2024",
-            "id": "2",
-            "date": "07/25/2024",
-            "hostID": "rhuntsherman",
-            "location": "Friends on Ponce",
+            "id": "163110148311675911361214152315186407618",
+            "title": "Open Mic Night Karaoke",
+            "date": "2025-06-28",
+            "host_id": "1",
+            "venue_id": "2",
+            "description": "Singers only event!",
             "active": true,
-            "performers": [
-                "darasjohnson"
+            "applications": [
+                {
+                    "id": "32808040584923104061700229478113568655",
+                    "event_id": "163110148311675911361214152315186407618",
+                    "event_title": "Open Mic Night Karaoke",
+                    "performer_id": "2",
+                    "performer_name": "Test Performer",
+                    "status": "approved"
+                }
             ],
-            "requestedPerformers": [
-                "darasjohnson",
-                "ashlynwoods"
-            ]
-        },
-        {
-            "name": "Crazy Girl Pageant",
-            "id": "311607268961562469698349551437085605583",
-            "date": "04/09/2019",
-            "hostID": "ashlynwoods",
-            "location": "Atlanta",
-            "active": false,
             "performers": [
-                "darasjohnson"
-            ],
-            "requestedPerformers": []
-        },
-        {
-            "id": "162129373545883178801392124292092135229",
-            "name": "Miss New Faces 2023",
-            "location": "Friends on Ponce",
-            "date": "09/02/2023",
-            "hostID": "darasjohnson",
-            "active": true,
-            "performers": [
-                "rhuntsherman"
-            ],
-            "requestedPerformers": [
-                "ashlynwoods"
+                "2"
             ]
-        },
-        {
-            "id": "250778473572510238248672958543463790620",
-            "name": "Dancing Dolls Pageant",
-            "location": "Splash Night Club",
-            "date": "10/01/2023",
-            "hostID": "ashlynwoods",
-            "active": true,
-            "performers": [],
-            "requestedPerformers": [
-                "darasjohnson",
-                "darasjohnson"
-            ]
-        },
-        {
-            "id": "328367965455587474157398978368145742459",
-            "name": "Atlanta All-Stars",
-            "location": "Blake's on the Park ",
-            "date": "09/19/2023",
-            "hostID": "darasjohnson",
-            "active": true,
-            "performers": [],
-            "requestedPerformers": []
         }
     ]
 }

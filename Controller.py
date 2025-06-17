@@ -1,52 +1,52 @@
 import Models.User
 import Models.Event
 import Models.Message
+import Models.Application
 import DAL.UsersDAL 
 import DAL.EventsDAL
+import DAL.VenuesDAL
 from flask import *
 import Authentication
 
 # Get the Users Data
-usersData = DAL.UsersDAL.UsersDAL("UsersData.json")
+users_data = DAL.UsersDAL.UsersDAL("UsersData.json")
 
 #Get Events Data
-eventsData = DAL.EventsDAL.EventsDAL("EventsData.json")
+events_data = DAL.EventsDAL.EventsDAL("EventsData.json")
 
-def auth(requestBody):
+#Load Venues Data
+venues_data = DAL.VenuesDAL.VenuesDAL("VenuesData.json")
+
+def login_user(request_body):
     #Get request values
-    userName = requestBody['userName']
-    password = requestBody['password']
+    requestEmail = request_body['email']
+    requestPassword = request_body['password']
 
     #Get user data based on userName
-    user = usersData.getUserByUsername(userName)
+    user = users_data.getUserByEmail(requestEmail)
 
     if not user:
         return jsonify({'message' : 'User not found'}), 401
-
-    currentUser = user['id']
-    expectedPassword = user['password']
-
-    if Authentication.authenticate(password, expectedPassword):
-        token = Authentication.generateJWT(currentUser)
-        return jsonify({'token': token }), 200
+    
+    if Authentication.authenticate(requestPassword, user['password']):
+        token = Authentication.generateJWT(user['id'], user['role'])
+        return jsonify({
+            'token': token,
+            'user': {
+                'user_id': user['id'],
+                'role': user['role'],
+                'email': user['email'],
+                'name': user.get('name')
+            }
+        }), 200
 
     return jsonify({'message' : 'Invalid Login' }), 401
 
-def getUsers(token, userId):
-    if Authentication.isTokenValid(token, userId):
-        data_set = usersData.getUsers()
-        return jsonify(data_set), 200
-    
-    return jsonify({'message' : 'Invalid Token.'}), 401
+def get_user(userId):
+    data_set = users_data.get_user(userId)
+    return jsonify(data_set), 200
 
-def getUser(token, currentUserId, userId):
-    if Authentication.isTokenValid(token, currentUserId):
-        data_set = usersData.getUserById(userId)
-        return jsonify(data_set), 200
-    
-    return jsonify({'message' : 'Invalid Token.'}), 401
-
-def createNewUser(requestBody):
+def create_user(requestBody):
     #Get Request Values
     firstName = requestBody['firstName']
     lastName = requestBody['lastName']
@@ -59,142 +59,155 @@ def createNewUser(requestBody):
     newUser = Models.User.User(firstName, lastName, email, userName, password, age)
     
     #Save New User to Database
-    usersData.addUser(newUser)
+    users_data.addUser(newUser)
 
     return jsonify({"userName": newUser.userName, "password": newUser.password}), 200
 
-def deactivateUser(token, currentUserId):
-    if Authentication.isTokenValid(token, currentUserId):
-        usersData.deactivateUser(currentUserId)
-        return jsonify({ 'message' : 'User Deactivated'}), 200
+
+def get_events():
+    data_set = events_data.get_events()
+    return jsonify(data_set), 200
+
+def get_event(event_id):
+    data_set = events_data.get_event(event_id)
+    return jsonify(data_set), 200
+
+def get_events_by_host(host_id):
+    results = []
+    events = events_data.get_events()
+    for event in events:
+        if (event['host_id'] == host_id):
+            results.append(event)
+
+    return jsonify(results), 200
+
+
+def create_event(request_body):
+    print("Request Info: ")
+    print(request_body)
+
+    # Get request values
+    title = request_body['title']
+    date = request_body['date']
+    host_id = request_body['hostID']
+    venue_id = request_body['venueID']
+    description = request_body['description']
+
+    #Create Event Instance
+    new_event = Models.Event.Event(title, date, host_id, venue_id, description)
+    print("Creating This Event: ")
+    print(new_event)
+
+    #Save to Database
+    events_data.add_event(new_event)
+
+    return jsonify({'message' : 'Event Created.'}), 200
+
+def get_applications(event_id):
+    event = events_data.get_event(event_id)
+    applications = event['applications']
+    return jsonify(applications), 200
+
+def get_performer_applications(performer_id):
+    results = []
+
+    events = events_data.get_events()
     
-    return jsonify({'message' : 'Invalid Token.'}), 401
-
-def activateUser(token, currentUserId):
-    if Authentication.isTokenValid(token, currentUserId):
-        usersData.activateUser(currentUserId)
-        return jsonify({ 'message' : 'User Activated'}), 200
+    for event in events:
+        applications = event['applications']
+        for application in applications:
+            if (application['performer_id'] == performer_id):
+                results.append(application)
     
-    return jsonify({'message' : 'Invalid Token.'}), 401
-
-def editUserInfo(token, currentUserId, requestBody):
-    if Authentication.isTokenValid(token, currentUserId):
-        #Get New Values
-        firstName = requestBody['firstName']
-        lastName = requestBody['lastName']
-        email = requestBody['email']
-        age = requestBody['age']
-
-        usersData.editUser(currentUserId, firstName, lastName, email, age)
-
-        return jsonify({ 'message' : 'Info Updated!'}), 200
+    return jsonify(results), 200
     
-    return jsonify({'message' : 'Invalid Token.'}), 401
+def add_application(request_body):
+     event_id = request_body['eventID']
+     performer_id = request_body['performerID']
 
-def changePassword(token, currentUserId, requestBody):
-    if Authentication.isTokenValid(token, currentUserId):
-        #Get request values
-        requestOldPassword = requestBody['oldPassword']
-        requestNewPassword = requestBody['newPassword']
+     event = events_data.get_event(event_id)
+     event_title = event['title']
+     performer = users_data.get_user(performer_id)
+     performer_name = performer['name']
 
-        #Check if old password is correct
-        originalPassword = usersData.getPassword(currentUserId)
-        if (requestOldPassword != originalPassword):
-            return jsonify({'message': 'Invalid Old Password.'}), 400
-        
-        #Update DB with new password
-        usersData.changePassword(currentUserId, requestNewPassword)
+     new_application = Models.Application.Application(event_id, event_title, performer_id, performer_name)
 
-        return jsonify({'message': "Password Updated!"}), 200
+     events_data.add_application(event_id, new_application)
 
-    return jsonify({'message': 'Invalid Token.'}), 401
+     return jsonify({'message': "Application Submitted!"}), 200
 
-def getMessages(token, currentUserId):
-    if Authentication.isTokenValid(token, currentUserId):
-        data_set = usersData.getMessages(currentUserId)
-        return jsonify(data_set)
+def approve_application(request_body):
+    event_id = request_body['eventID']
+    application_id = request_body['applicationID']
 
-    return jsonify({'message': 'Invalid Token.'}), 401
+    event = events_data.get_event(event_id)
+    if not event:
+        return jsonify({'message': 'Event not found'}), 404
 
-def sendMessage(token, currentUserId, requestBody):
+    for app in event['applications']:
+        if app['id'] == application_id:
+            app['status'] = 'approved'
+            event['performers'].append(app['performer_id'])
+            events_data.save()
+            return jsonify({'message': 'Application approved'}), 200
 
-    if Authentication.isTokenValid(token, currentUserId):
-        #Get Request Values
-        recipientUserId = requestBody['userId']
-        subject = requestBody['subject']
-        message = requestBody['message']
+    return jsonify({'message': 'Application not found'}), 404
 
-        #Create Message
-        newMessage = Models.Message.Message(subject, message, recipientUserId)
+def deny_application(request_body):
+    event_id = request_body['eventID']
+    application_id = request_body['applicationID']
 
-        usersData.addMessage(newMessage)
-        return jsonify({'message': 'Message Sent!'}), 200
+    event = events_data.get_event(event_id)
+    if not event:
+        return jsonify({'message': 'Event not found'}), 404
 
-    return jsonify({'message': 'Invalid Token.'}), 401
+    for app in event['applications']:
+        if app['id'] == application_id:
+            app['status'] = 'denied'
+            events_data.save()
+            return jsonify({'message': 'Application denied'}), 200
 
-def getEvents(token, currentUserId):
-    if Authentication.isTokenValid(token, currentUserId):
-        data_set = eventsData.getAllEvents()
-        return jsonify(data_set), 200
-    
-    return jsonify({'message' : 'Invalid Token.'}), 401
+    return jsonify({'message': 'Application not found'}), 404
+
+def get_venues():
+    results = venues_data.get_venues()
+    return jsonify(results), 200
+
+# ============================
+# Need to refactor or remove
+# ============================
+
 
 def getActiveEvents(token, currentUserId):
     if Authentication.isTokenValid(token, currentUserId):
-        data_set = eventsData.getActiveEvents()
+        data_set = events_data.getActiveEvents()
         return jsonify(data_set), 200
     
     return jsonify({'message' : 'Invalid Token.'}), 401
 
-def getEvent(token, currentUserId, eventId):
-    if Authentication.isTokenValid(token, currentUserId):
-        data_set = eventsData.getEvent(eventId)
-        return jsonify(data_set), 200
 
-    return jsonify({'message': 'Invalid Token.'}), 401
     
 def getEventsByLocation(token, currentUserId, location):
     if Authentication.isTokenValid(token, currentUserId):
-        data_set = eventsData.getEventsByLocation(location)
+        data_set = events_data.getEventsByLocation(location)
         return jsonify(data_set), 200
 
     return jsonify({'message' : 'Invalid Token.'}), 401
 
-def getEventsByHost(token, currentUserId, host):
-    if Authentication.isTokenValid(token, currentUserId):
-        data_set = eventsData.getEventsByHost(host)
-        return jsonify(data_set), 200
-    
-    return jsonify({'message' : 'Invalid Token.'}), 401
+
 
 def getEventsByDate(token, currentUserId, month, year):
     if Authentication.isTokenValid(token, currentUserId):
-        data_set = eventsData.getEventsByDate(month, year)
+        data_set = events_data.getEventsByDate(month, year)
         return jsonify(data_set)
     
     return jsonify({'message' : 'Invalid Token.'}), 401
 
-def createNewEvent(token, currentUserId, requestBody):
-    if Authentication.isTokenValid(token, currentUserId):
-        # Get request values
-        name = requestBody['name']
-        date = requestBody['date']
-        location = requestBody['location']
 
-        #Create Event Instance
-        newEvent = Models.Event.Event(name, date, currentUserId, location)
-
-        #Save to Database
-        eventsData.createEvent(newEvent)
-
-        return jsonify({'message' : 'Event Created.'}), 200
-
-    
-    return jsonify({'message' : 'Invalid Token.'}), 401
 
 def cancelEvent(token, currentUserId, eventId):
     if Authentication.isTokenValid(token, currentUserId):
-        cancelled = eventsData.cancelEvent(eventId)
+        cancelled = events_data.cancelEvent(eventId)
 
         if(cancelled):
             return jsonify({'message' : 'Event Cancelled.'}), 200
@@ -205,7 +218,7 @@ def cancelEvent(token, currentUserId, eventId):
 
 def activateEvent(token, currentUserId, eventId):
     if Authentication.isTokenValid(token, currentUserId):
-        activated = eventsData.activateEvent(eventId)
+        activated = events_data.activateEvent(eventId)
 
         if(activated):
             return jsonify({'message' : 'Event Activated.'}), 200
@@ -222,7 +235,7 @@ def editEvent(token, currentUserId, eventId, requestBody):
         eventDate = requestBody['date']
 
         #Update Database
-        eventsData.editEvent(eventId, eventName, eventLocation, eventDate)
+        events_data.editEvent(eventId, eventName, eventLocation, eventDate)
 
         return jsonify({'message': 'Event Updated!'}), 200
 
@@ -232,12 +245,12 @@ def getEventPerformers(token, currentUserId, eventId):
     if Authentication.isTokenValid(token, currentUserId):
 
         #Get the list of userIds
-        data_set = eventsData.getEventPerformers(eventId)
+        data_set = events_data.getEventPerformers(eventId)
 
         #Get each performers info
         results = []
         for performer in data_set:
-            performerInfo = usersData.getUser(performer)
+            performerInfo = users_data.getUser(performer)
             results.append(performerInfo)
 
         return jsonify(results), 200
@@ -248,12 +261,12 @@ def getEventRequestedPerformers(token, currentUserId, eventId):
     if Authentication.isTokenValid(token, currentUserId):
 
         #Get the list of userIds
-        data_set = eventsData.getEventRequestedPerformers(eventId)
+        data_set = events_data.getEventRequestedPerformers(eventId)
 
         #Get each performers info
         results = []
         for performer in data_set:
-            performerInfo = usersData.getUserById(performer)
+            performerInfo = users_data.get_user(performer)
             results.append(performerInfo)
 
         return jsonify(results), 200
@@ -262,7 +275,7 @@ def getEventRequestedPerformers(token, currentUserId, eventId):
 
 def requestEvent(token, currentUserId, eventId):
     if Authentication.isTokenValid(token, currentUserId):
-        requested = eventsData.requestEvent(eventId, currentUserId)
+        requested = events_data.requestEvent(eventId, currentUserId)
 
         if (requested):
             return jsonify({'message' : 'Event Requested.'}), 200
@@ -271,20 +284,11 @@ def requestEvent(token, currentUserId, eventId):
     
     return jsonify({'message' : 'Invalid Token.'}), 401
 
-def approvePerformer(token, currentUserId, eventId, performerId):
-    if Authentication.isTokenValid(token, currentUserId):
-        approved = eventsData.approvePerformer(eventId, performerId)
 
-        if(approved):
-            return jsonify({'message' : 'Approved.'}), 200
-        else:
-            return jsonify({'message' : 'Not Approved.'}), 400
-    
-    return jsonify({'message' : 'Invalid Token.'}), 401
     
 def removePerformer(token, currentUserId, eventId, userId):
     if Authentication.isTokenValid(token, currentUserId):
-        removed = eventsData.removePerformer(eventId, userId)
+        removed = events_data.removePerformer(eventId, userId)
 
         if(removed):
             return jsonify({'message' : 'Performer Removed.'}), 200
@@ -295,7 +299,7 @@ def removePerformer(token, currentUserId, eventId, userId):
     
 def denyPerformer(token, currentUserId, eventId, userId):
     if Authentication.isTokenValid(token, currentUserId):
-        denied = eventsData.denyPerformer(eventId, userId)
+        denied = events_data.denyPerformer(eventId, userId)
 
         if (denied):
             return jsonify({'message' : 'Performer Denied.'}), 200

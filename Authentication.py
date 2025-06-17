@@ -15,8 +15,8 @@ def authenticate(inputPassword, expectedPassword):
         return False
 
 
-def generateJWT(userName):
-    token = jwt.encode({'user' : userName, 'exp' : DateHelper.getTokenExpiration()}, "Secret_key", algorithm="HS256")
+def generateJWT(user_name, role):
+    token = jwt.encode({'user_id' : user_name, 'role': role, 'exp' : DateHelper.getTokenExpiration()}, "Secret_key", algorithm="HS256")
     return token
 
 def isTokenValid(token, currentUser):

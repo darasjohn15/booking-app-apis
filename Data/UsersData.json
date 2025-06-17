@@ -2,185 +2,20 @@
     "_fileName": "./Data/UsersData.json",
     "_data": [
         {
-            "userName": "djohnson",
-            "id": "darasjohnson",
-            "email": "daras.john15@gmail.com",
-            "firstName": "Daras",
+            "id": "1",
+            "email": "testhost@gmail.com",
+            "name": "Test Host",
             "password": "pass123",
-            "lastName": "Johnson",
-            "active": true,
-            "age": "28",
-            "messages": [
-                {
-                    "messageId": "",
-                    "date": "",
-                    "subject": "",
-                    "message": "",
-                    "read": false
-                },
-                {
-                    "messageId": "261589833640317281276700549928262164366",
-                    "date": "7/25/2023",
-                    "subject": "Test Subject",
-                    "message": "This is a test message",
-                    "userId": "darasjohnson",
-                    "read": false
-                }
-            ]
+            "role": "host",
+            "active": true
         },
         {
-            "userName": "rsherman",
-            "id": "rhuntsherman",
-            "email": "rashadmarquis@gmail.com",
-            "firstName": "Rashad",
+            "id": "2",
+            "email": "testperformer@gmail.com",
+            "name": "Test Performer",
             "password": "pass123",
-            "lastName": "Hunt-Sherman",
-            "active": true,
-            "age": "28",
-            "messages": []
-        },
-        {
-            "userName": "ascott",
-            "id": "",
-            "email": "angelescott@yahoo.com",
-            "firstName": "Angele",
-            "password": "pass123",
-            "lastName": "Scott",
-            "active": true,
-            "age": "47",
-            "messages": []
-        },
-        {
-            "userName": "dscott",
-            "id": "",
-            "email": "black5@gmail.com",
-            "firstName": "Daris",
-            "password": "pass123",
-            "lastName": "Scott",
-            "active": true,
-            "age": "47",
-            "messages": []
-        },
-        {
-            "userName": "awoods",
-            "id": "ashlynwoods",
-            "email": "awoods@gmail.com",
-            "firstName": "Ashlyn",
-            "password": "pass123",
-            "lastName": "Woods",
-            "active": true,
-            "age": "18",
-            "messages": []
-        },
-        {
-            "firstName": "Test",
-            "lastName": "User5",
-            "email": "testuser5@email.com",
-            "age": "56",
-            "active": true,
-            "id": "774566055902553288295920904439485188",
-            "userName": "testuser5",
-            "password": "pass123",
-            "messages": []
-        },
-        {
-            "firstName": "TestFirstName",
-            "lastName": "TestLastName",
-            "email": "test@test.com",
-            "age": "28",
-            "active": true,
-            "id": "305028980234004582208155454962748011173",
-            "userName": "testUsername",
-            "password": "testPassword",
-            "messages": []
-        },
-        {
-            "firstName": "TestFirstName",
-            "lastName": "TestLastName",
-            "email": "test@test.com",
-            "age": "28",
-            "active": true,
-            "id": "261643757356113002073221039337539995347",
-            "userName": "testUsername",
-            "password": "testPassword",
-            "messages": []
-        },
-        {
-            "firstName": "TestFirstName",
-            "lastName": "TestLastName",
-            "email": "test@test.com",
-            "age": "28",
-            "active": true,
-            "id": "191136884194034174258374103542924862814",
-            "userName": "testUsername",
-            "password": "testPassword",
-            "messages": []
-        },
-        {
-            "firstName": "TestFirstName",
-            "lastName": "TestLastName",
-            "email": "test@test.com",
-            "age": "28",
-            "active": true,
-            "id": "77584774170173342487995901638904705994",
-            "userName": "testUsername",
-            "password": "testPassword",
-            "messages": []
-        },
-        {
-            "firstName": "TestFirstName",
-            "lastName": "TestLastName",
-            "email": "test@test.com",
-            "age": "28",
-            "active": true,
-            "id": "85865489306963228263693490522924035428",
-            "userName": "testUsername",
-            "password": "testPassword",
-            "messages": []
-        },
-        {
-            "firstName": "TestFirstName",
-            "lastName": "TestLastName",
-            "email": "test@test.com",
-            "age": "28",
-            "active": true,
-            "id": "62340287159159619501175083959870289394",
-            "userName": "testUsername",
-            "password": "testPassword",
-            "messages": []
-        },
-        {
-            "firstName": "TestFirstName",
-            "lastName": "TestLastName",
-            "email": "test@test.com",
-            "age": "28",
-            "active": true,
-            "id": "249541524347808254152690695793179299850",
-            "userName": "testUsername",
-            "password": "testPassword",
-            "messages": []
-        },
-        {
-            "firstName": "TestFirstName",
-            "lastName": "TestLastName",
-            "email": "test@test.com",
-            "age": "28",
-            "active": true,
-            "id": "114212633178346962475057385002581935763",
-            "userName": "testUsername",
-            "password": "testPassword",
-            "messages": []
-        },
-        {
-            "firstName": "TestFirstName",
-            "lastName": "TestLastName",
-            "email": "test@test.com",
-            "age": "28",
-            "active": true,
-            "id": "277139919011578861524179822370529123885",
-            "userName": "testUsername",
-            "password": "testPassword",
-            "messages": []
+            "role": "performer",
+            "active": true
         }
     ]
 }
