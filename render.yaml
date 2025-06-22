@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: booking-app-apis
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn Main:app"
+    pythonVersion: 3.10
