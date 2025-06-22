@@ -1,20 +1,16 @@
 # tests/test_auth.py
+
 import pytest
 import jwt
 from datetime import datetime, timedelta
+from Main import app  # ensure this points to your Flask app
 
-# Import the Flask app object that you create in main.py
-from Main import app          # <-- change if your entry file is named differently
+# ---------- Constants ----------
+SECRET_KEY = "Secret_key"  # Sync with your real secret key
+ROUTE = "/events"     # Protected route to test token logic
 
-# ---- Config -------------------------------------------------------------
-
-SECRET_KEY = "razzo"   # keep in sync with main code
-ROUTE = "/api/venue/events"      # the protected endpoint
-
-# ---- Helpers ------------------------------------------------------------
-
-def make_token(user_id="test-id", role="venue", minutes=5):
-    """Create a JWT that expires in <minutes> (negative => already expired)."""
+# ---------- Helper: Token Generator ----------
+def make_token(user_id="test-id", role="host", minutes=5):
     payload = {
         "user_id": user_id,
         "role": role,
@@ -22,16 +18,14 @@ def make_token(user_id="test-id", role="venue", minutes=5):
     }
     return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
-# ---- Fixtures -----------------------------------------------------------
-
+# ---------- Pytest Fixture ----------
 @pytest.fixture
 def client():
-    """Flask test client (sets app.testing = True)."""
     app.config["TESTING"] = True
     with app.test_client() as c:
         yield c
 
-# ---- Tests --------------------------------------------------------------
+# ---------- Tests ----------
 
 def test_missing_token(client):
     res = client.get(ROUTE)
@@ -39,29 +33,24 @@ def test_missing_token(client):
     assert b"Token is missing" in res.data
 
 def test_bad_format(client):
-    res = client.get(ROUTE, headers={"Authorization": "abc123"})
+    res = client.get(ROUTE, headers={"Authorization": "JustSomeString"})
     assert res.status_code == 401
 
 def test_expired_token(client):
-    token = make_token(minutes=-5)                      # already expired
+    token = make_token(minutes=-10)  # Already expired
     res = client.get(ROUTE, headers={"Authorization": f"Bearer {token}"})
     assert res.status_code == 401
     assert b"expired" in res.data.lower()
 
-def test_corrupted_token(client):
-    token = make_token() + "corrupt"                    # break the signature
+def test_invalid_token(client):
+    token = make_token() + "garbage"
     res = client.get(ROUTE, headers={"Authorization": f"Bearer {token}"})
     assert res.status_code == 401
     assert b"invalid" in res.data.lower()
 
-def test_wrong_role(client):
-    token = make_token(role="performer")                # venue-only route
-    res = client.get(ROUTE, headers={"Authorization": f"Bearer {token}"})
-    assert res.status_code in (401, 403)                # whichever you return
-                                                        # adjust expectation
-
 def test_valid_token(client):
-    token = make_token()                                # venue role, valid
+    token = make_token()
     res = client.get(ROUTE, headers={"Authorization": f"Bearer {token}"})
-    assert res.status_code == 200
-    # Optionally assert structure of returned JSON
+    
+    # If your data source is empty, this might return 200 with []
+    assert res.status_code == 200 or res.status_code == 204

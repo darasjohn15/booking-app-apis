@@ -47,6 +47,21 @@ def get_user(userId):
     return jsonify(data_set), 200
 
 def create_user(requestBody):
+    required_fields = ["firstName", "lastName", "email", "userName", "password", "age"]
+
+    # Validate all required fields
+    for field in required_fields:
+        if field not in requestBody or requestBody[field] in [None, ""]:
+            return jsonify({'error': f'Missing or empty required field: {field}'}), 400
+
+    # Additional validation (e.g. age should be int and > 0)
+    try:
+        age = int(requestBody['age'])
+        if age <= 0:
+            return jsonify({'error': 'Age must be a positive number'}), 400
+    except (ValueError, TypeError):
+        return jsonify({'error': 'Age must be a valid integer'}), 400
+    
     #Get Request Values
     firstName = requestBody['firstName']
     lastName = requestBody['lastName']
@@ -173,137 +188,7 @@ def get_venues():
     results = venues_data.get_venues()
     return jsonify(results), 200
 
-# ============================
-# Need to refactor or remove
-# ============================
-
-
-def getActiveEvents(token, currentUserId):
-    if Authentication.isTokenValid(token, currentUserId):
-        data_set = events_data.getActiveEvents()
-        return jsonify(data_set), 200
-    
-    return jsonify({'message' : 'Invalid Token.'}), 401
-
-
-    
-def getEventsByLocation(token, currentUserId, location):
-    if Authentication.isTokenValid(token, currentUserId):
-        data_set = events_data.getEventsByLocation(location)
-        return jsonify(data_set), 200
-
-    return jsonify({'message' : 'Invalid Token.'}), 401
 
 
 
-def getEventsByDate(token, currentUserId, month, year):
-    if Authentication.isTokenValid(token, currentUserId):
-        data_set = events_data.getEventsByDate(month, year)
-        return jsonify(data_set)
-    
-    return jsonify({'message' : 'Invalid Token.'}), 401
 
-
-
-def cancelEvent(token, currentUserId, eventId):
-    if Authentication.isTokenValid(token, currentUserId):
-        cancelled = events_data.cancelEvent(eventId)
-
-        if(cancelled):
-            return jsonify({'message' : 'Event Cancelled.'}), 200
-        else:
-            return jsonify({'message': 'Could Not Cancelled'}), 400
-        
-    return jsonify({'message' : 'Invalid Token.'}), 401
-
-def activateEvent(token, currentUserId, eventId):
-    if Authentication.isTokenValid(token, currentUserId):
-        activated = events_data.activateEvent(eventId)
-
-        if(activated):
-            return jsonify({'message' : 'Event Activated.'}), 200
-        else:
-            return jsonify({'message': 'Could Not Activated'}), 400
-        
-    return jsonify({'message' : 'Invalid Token.'}), 401
-
-def editEvent(token, currentUserId, eventId, requestBody):
-    if Authentication.isTokenValid(token, currentUserId):
-        # Get Request Values
-        eventName = requestBody['name']
-        eventLocation = requestBody['location']
-        eventDate = requestBody['date']
-
-        #Update Database
-        events_data.editEvent(eventId, eventName, eventLocation, eventDate)
-
-        return jsonify({'message': 'Event Updated!'}), 200
-
-    return jsonify({'message': 'Invalid Token.'}), 401
-
-def getEventPerformers(token, currentUserId, eventId):
-    if Authentication.isTokenValid(token, currentUserId):
-
-        #Get the list of userIds
-        data_set = events_data.getEventPerformers(eventId)
-
-        #Get each performers info
-        results = []
-        for performer in data_set:
-            performerInfo = users_data.getUser(performer)
-            results.append(performerInfo)
-
-        return jsonify(results), 200
-    
-    return jsonify({'message' : 'Invalid Token.'}), 401
-
-def getEventRequestedPerformers(token, currentUserId, eventId):
-    if Authentication.isTokenValid(token, currentUserId):
-
-        #Get the list of userIds
-        data_set = events_data.getEventRequestedPerformers(eventId)
-
-        #Get each performers info
-        results = []
-        for performer in data_set:
-            performerInfo = users_data.get_user(performer)
-            results.append(performerInfo)
-
-        return jsonify(results), 200
-
-    return jsonify({'message' : 'Invalid Token.'}), 401
-
-def requestEvent(token, currentUserId, eventId):
-    if Authentication.isTokenValid(token, currentUserId):
-        requested = events_data.requestEvent(eventId, currentUserId)
-
-        if (requested):
-            return jsonify({'message' : 'Event Requested.'}), 200
-        else:
-            return jsonify({'message' : 'Cannot request event.'}), 400
-    
-    return jsonify({'message' : 'Invalid Token.'}), 401
-
-
-    
-def removePerformer(token, currentUserId, eventId, userId):
-    if Authentication.isTokenValid(token, currentUserId):
-        removed = events_data.removePerformer(eventId, userId)
-
-        if(removed):
-            return jsonify({'message' : 'Performer Removed.'}), 200
-        else:
-            return jsonify({'message' : 'Performer Not Found.'}), 400
-    
-    return jsonify({'message' : 'Invalid Token.'}), 401
-    
-def denyPerformer(token, currentUserId, eventId, userId):
-    if Authentication.isTokenValid(token, currentUserId):
-        denied = events_data.denyPerformer(eventId, userId)
-
-        if (denied):
-            return jsonify({'message' : 'Performer Denied.'}), 200
-        else:
-            return jsonify({'message' : 'Performer Not Found.'}), 400
-    
-    return jsonify({'message' : 'Invalid Token.'}), 401
