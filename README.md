@@ -56,19 +56,63 @@ booking-app-api/
 └── Main.py            # Main app entry point
 ```
 
-## Sample Endpoints  
-* ```POST /login```
-* ```POST /register```
-* ```GET /events```
-* ```POST /apply```
-* ```GET /applications```
-* ```POST /applications/approve```
-
 ## API Testing
 Use the included Postman collection to test the API:
 
 - File: `booking-app-api.postman_collection.json`
 - Import it into Postman and set the base URL (e.g., `https://booking-app-apis.onrender.com`)
+
+## API Endpoints
+
+> All authenticated endpoints require a `Bearer <token>` in the `Authorization` header.
+
+---
+
+### Auth
+
+| Method | Endpoint     | Description                     |
+|--------|--------------|---------------------------------|
+| POST   | `/login`     | User login and JWT token retrieval |
+
+---
+
+### Users
+
+| Method | Endpoint        | Description          |
+|--------|------------------|----------------------|
+| GET    | `/users/:userId` | Get a user by ID     |
+
+---
+
+### Events
+
+| Method | Endpoint                   | Description                        |
+|--------|-----------------------------|------------------------------------|
+| GET    | `/events`                   | Get all events                     |
+| GET    | `/events/:eventId`          | Get a specific event by ID         |
+| GET    | `/events/host/:hostId`      | Get events hosted by a specific host |
+| POST   | `/events`                   | Create a new event                 |
+| PUT    | `/events/:userId/:eventId`  | Update an event *(legacy/test)*   |
+
+---
+
+### Applications
+
+| Method | Endpoint                                            | Description                         |
+|--------|------------------------------------------------------|-------------------------------------|
+| GET    | `/events/applications/:eventId`                      | Get all applications for an event   |
+| GET    | `/events/applications/performer/:performerId`        | Get all applications by a performer |
+| POST   | `/events/applications`                               | Submit an application to an event   |
+| POST   | `/events/applications/approve`                       | Approve an application              |
+| POST   | `/events/applications/deny`                          | Deny an application                 |
+
+---
+
+### Venues
+
+| Method | Endpoint     | Description         |
+|--------|--------------|---------------------|
+| GET    | `/venues`    | Get a list of venues |
 
 ## Status
 Actively in development. Designed for local testing and API prototyping — easily extendable to support persistent storage and production use.
