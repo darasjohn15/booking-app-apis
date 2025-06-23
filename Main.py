@@ -4,7 +4,11 @@ import Controller
 from auth_utils import token_required
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": ["http://localhost:4200","http://127.0.0.1:4200"]}}, supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": [
+    "http://localhost:4200",
+    "http://127.0.0.1:4200",
+    "https://booking-web-app-asce.onrender.com/"
+]}}, supports_credentials=True)
 
 # =======================================================================
 #  
