@@ -64,5 +64,11 @@ booking-app-api/
 * ```GET /applications```
 * ```POST /applications/approve```
 
+## API Testing
+Use the included Postman collection to test the API:
+
+- File: `booking-app-api.postman_collection.json`
+- Import it into Postman and set the base URL (e.g., `https://booking-app-apis.onrender.com`)
+
 ## Status
 Actively in development. Designed for local testing and API prototyping — easily extendable to support persistent storage and production use.
