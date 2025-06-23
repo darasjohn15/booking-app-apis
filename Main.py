@@ -44,7 +44,6 @@ def get_user(userId):
 @cross_origin(origin='http://localhost:4200')
 @token_required
 def get_events():
-    user_id = request.user_id  # pulled from token in decorator
     return Controller.get_events()
 
 # Create New Event 
@@ -84,7 +83,7 @@ def get_performer_applications(performer_id):
     return Controller.get_performer_applications(performer_id)
 
 # Add Application
-@app.route('/events/application', methods=['POST'])
+@app.route('/events/applications', methods=['POST'])
 @cross_origin(origin='http://localhost:4200')
 @token_required
 def add_application():
