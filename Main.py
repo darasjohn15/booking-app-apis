@@ -68,6 +68,13 @@ def get_event(eventId):
 def get_events_by_host(host_id):
     return Controller.get_events_by_host(host_id)
 
+# Update Event
+@app.route('/events/update', methods=['PUT'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def update_event():
+    return Controller.update_event(request.json)
+
 # Get Applications
 @app.route('/events/applications/<event_id>', methods=['GET'])
 @cross_origin(origin='http://localhost:4200')

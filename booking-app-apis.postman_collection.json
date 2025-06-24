@@ -270,14 +270,14 @@
 						"method": "PUT",
 						"header": [
 							{
-								"key": "x-access-token",
-								"value": "{{token}}",
+								"key": "Authorization",
+								"value": "Bearer {{myToken}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\":\"Miss Make It Happen\",\n    \"location\": \"Future ATL\",\n    \"date\": \"08/01/2023\"\n}",
+							"raw": "{\n    \"ID\":\"139267962413616418217257249946391203700\",\n    \"title\": \"Test Title\",\n    \"date\": \"06/30/2025\",\n    \"hostID\": \"1\",\n    \"venueID\": \"1\",\n    \"description\": \"Test Description\",\n    \"active\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -285,19 +285,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8085/events/{{user}}/1",
-							"protocol": "http",
+							"raw": "{{URL}}/events/update",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{URL}}"
 							],
-							"port": "8085",
 							"path": [
 								"events",
-								"{{user}}",
-								"1"
+								"update"
 							]
 						}
 					},
@@ -387,6 +381,12 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "LocalURL",
+			"value": "http://127.0.0.1:8085"
 		}
 	]
 }

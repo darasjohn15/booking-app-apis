@@ -96,6 +96,22 @@ def get_events_by_host(host_id):
 
     return jsonify(results), 200
 
+def update_event(request_body):
+    id = request_body['ID']
+    title = request_body['title']
+    date = request_body['date']
+    host_id = request_body['hostID']
+    venue_id = request_body['venueID']
+    description = request_body['description']
+    active = request_body['active']
+
+    updated = events_data.update_event(id, title, date, host_id, venue_id, description, active)
+
+    if updated:
+        return jsonify({'message': 'Event updated successfully'}), 200
+    else:
+        return jsonify({'message': 'Event not found'}), 404
+
 
 def create_event(request_body):
     print("Request Info: ")
