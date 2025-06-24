@@ -18,7 +18,23 @@ class EventsDAL(DatabaseObject):
         for x in self._data:
             if (x['id'] == event_id):
                 return x
-      
+
+    def update_event(self, id, title, date, host_id, venue_id, description, active):
+        for x in self._data:
+            if (x['id'] == id):
+                x['title'] = title or x['title']
+                x['date'] = date or x['date']
+                x['host_id'] = host_id or x['host_id']
+                x['venue_id'] = venue_id or x['venue_id']
+                x['description'] = description or x['description']
+                x['active'] = active
+                
+                self.save()
+                self.reload()
+
+                print('Event Updated!')
+                return True
+        return False
             
     def add_application(self, event_id, application):
         for x in self._data:
@@ -97,17 +113,7 @@ class EventsDAL(DatabaseObject):
             
             return False
     
-    def editEvent(self, eventId, eventName, eventLocation, eventDate):
-        for x in self._data:
-            if (x['id'] == eventId):
-                x['name'] = eventName
-                x['location'] = eventLocation
-                x['date'] = eventDate
-                
-                self.save()
-                self.reload()
 
-                print('Event Updated!')
 
     def getEventsByLocation(self, location):
         hasEvents = False

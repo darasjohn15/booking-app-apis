@@ -42,6 +42,28 @@
             "performers": [
                 "2"
             ]
+        },
+        {
+            "id": "141385352656382460054962046680868032741",
+            "title": "Miss Make It Happen",
+            "date": "Future ATL",
+            "host_id": "08/01/2023",
+            "venue_id": "",
+            "description": "",
+            "active": false,
+            "applications": [],
+            "performers": []
+        },
+        {
+            "id": "139267962413616418217257249946391203700",
+            "title": "Beyonce Music Video Shoot",
+            "date": "08/30/2025",
+            "host_id": "1",
+            "venue_id": "1",
+            "description": "Join us on set for an exclusive, high-energy music video production featuring Beyonc\u00e9. This shoot will blend cinematic visuals with dynamic choreography, and we're looking for talented performers to help bring the vision to life.",
+            "active": false,
+            "applications": [],
+            "performers": []
         }
     ]
 }
