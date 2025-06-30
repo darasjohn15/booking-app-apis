@@ -1,6 +1,3 @@
--- events_get.sql
--- Returns a single event record by event ID
-
 CREATE OR REPLACE FUNCTION Event_GET(p_eventID INTEGER)
 RETURNS TABLE (
     id INTEGER,

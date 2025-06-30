@@ -1,6 +1,3 @@
--- events_delete.sql
--- Deletes an event by ID and returns the deleted row
-
 CREATE OR REPLACE FUNCTION Event_DELETE(
     p_event_id INTEGER
 )

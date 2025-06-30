@@ -2,8 +2,8 @@ import subprocess
 import glob
 import sys
 
-SERVICE_NAME = "booking_app"  # Your pg_service.conf service name
-SQL_DIR = "./sql"             # Directory where your .sql files live
+SERVICE_NAME = "booking_app"  
+SQL_DIR = "./sql"            
 
 def run_sql_file(filepath):
     print(f"Running {filepath} ...")
