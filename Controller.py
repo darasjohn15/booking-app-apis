@@ -7,6 +7,13 @@ import DAL.EventsDAL
 import DAL.VenuesDAL
 from flask import *
 import Authentication
+from db import get_db_connection
+from psycopg2.extras import RealDictCursor
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv() 
 
 # Get the Users Data
 users_data = DAL.UsersDAL.UsersDAL("UsersData.json")
@@ -79,60 +86,32 @@ def create_user(requestBody):
     return jsonify({"userName": newUser.userName, "password": newUser.password}), 200
 
 
-def get_events():
-    data_set = events_data.get_events()
-    return jsonify(data_set), 200
+def get_events(host_id, active, location):
+    # convert 'true'/'false' strings to boolean if needed
+    if active is not None:
+        active = active.lower() == 'true'
+
+    events = DAL.EventsDAL.get_events(host_id, active, location)
+
+    return events
 
 def get_event(event_id):
-    data_set = events_data.get_event(event_id)
-    return jsonify(data_set), 200
+    event = DAL.EventsDAL.get_event(event_id)
+    return event
 
-def get_events_by_host(host_id):
-    results = []
-    events = events_data.get_events()
-    for event in events:
-        if (event['host_id'] == host_id):
-            results.append(event)
+def update_event(event_id, title=None, date=None, venue_id=None, description=None, is_active=None):
+    updated_event = DAL.EventsDAL.update_event(
+        event_id,
+        title,
+        date,
+        venue_id,
+        description,
+        is_active
+    )
+    return updated_event
 
-    return jsonify(results), 200
-
-def update_event(request_body):
-    id = request_body['ID']
-    title = request_body['title']
-    date = request_body['date']
-    host_id = request_body['hostID']
-    venue_id = request_body['venueID']
-    description = request_body['description']
-    active = request_body['active']
-
-    updated = events_data.update_event(id, title, date, host_id, venue_id, description, active)
-
-    if updated:
-        return jsonify({'message': 'Event updated successfully'}), 200
-    else:
-        return jsonify({'message': 'Event not found'}), 404
-
-
-def create_event(request_body):
-    print("Request Info: ")
-    print(request_body)
-
-    # Get request values
-    title = request_body['title']
-    date = request_body['date']
-    host_id = request_body['hostID']
-    venue_id = request_body['venueID']
-    description = request_body['description']
-
-    #Create Event Instance
-    new_event = Models.Event.Event(title, date, host_id, venue_id, description)
-    print("Creating This Event: ")
-    print(new_event)
-
-    #Save to Database
-    events_data.add_event(new_event)
-
-    return jsonify({'message' : 'Event Created.'}), 200
+def create_event(host_id, venue_id, title, description, location, date):
+    return DAL.EventsDAL.create_event(host_id, venue_id, title, description, location, date)
 
 def get_applications(event_id):
     event = events_data.get_event(event_id)
