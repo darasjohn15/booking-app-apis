@@ -1,14 +1,10 @@
 import Models.User
-import Models.Event
-import Models.Message
-import Models.Application
 import DAL.UsersDAL 
-import DAL.EventsDAL
 import DAL.VenuesDAL
 from flask import *
 import Authentication
-from db import get_db_connection
-from psycopg2.extras import RealDictCursor
+from DAL import ApplicationsDAL
+from DAL import EventsDAL
 from dotenv import load_dotenv
 import os
 
@@ -17,9 +13,6 @@ load_dotenv()
 
 # Get the Users Data
 users_data = DAL.UsersDAL.UsersDAL("UsersData.json")
-
-#Get Events Data
-events_data = DAL.EventsDAL.EventsDAL("EventsData.json")
 
 #Load Venues Data
 venues_data = DAL.VenuesDAL.VenuesDAL("VenuesData.json")
@@ -100,7 +93,7 @@ def get_event(event_id):
     return event
 
 def update_event(event_id, title=None, date=None, venue_id=None, description=None, is_active=None):
-    updated_event = DAL.EventsDAL.update_event(
+    updated_event = EventsDAL.update_event(
         event_id,
         title,
         date,
@@ -113,71 +106,20 @@ def update_event(event_id, title=None, date=None, venue_id=None, description=Non
 def create_event(host_id, venue_id, title, description, location, date):
     return DAL.EventsDAL.create_event(host_id, venue_id, title, description, location, date)
 
-def get_applications(event_id):
-    event = events_data.get_event(event_id)
-    applications = event['applications']
-    return jsonify(applications), 200
+def get_applications(event_id, performer_id, status):
+    applications = DAL.ApplicationsDAL.get_applications(event_id, performer_id, status)
+    return applications
 
-def get_performer_applications(performer_id):
-    results = []
-
-    events = events_data.get_events()
+def get_application(application_id):
+    event = DAL.ApplicationsDAL.get_application(application_id)
+    return event
     
-    for event in events:
-        applications = event['applications']
-        for application in applications:
-            if (application['performer_id'] == performer_id):
-                results.append(application)
-    
-    return jsonify(results), 200
-    
-def add_application(request_body):
-     event_id = request_body['eventID']
-     performer_id = request_body['performerID']
+def create_application(event_id, performer_id):
+     return DAL.ApplicationsDAL.create_application(event_id, performer_id)
 
-     event = events_data.get_event(event_id)
-     event_title = event['title']
-     performer = users_data.get_user(performer_id)
-     performer_name = performer['name']
-
-     new_application = Models.Application.Application(event_id, event_title, performer_id, performer_name)
-
-     events_data.add_application(event_id, new_application)
-
-     return jsonify({'message': "Application Submitted!"}), 200
-
-def approve_application(request_body):
-    event_id = request_body['eventID']
-    application_id = request_body['applicationID']
-
-    event = events_data.get_event(event_id)
-    if not event:
-        return jsonify({'message': 'Event not found'}), 404
-
-    for app in event['applications']:
-        if app['id'] == application_id:
-            app['status'] = 'approved'
-            event['performers'].append(app['performer_id'])
-            events_data.save()
-            return jsonify({'message': 'Application approved'}), 200
-
-    return jsonify({'message': 'Application not found'}), 404
-
-def deny_application(request_body):
-    event_id = request_body['eventID']
-    application_id = request_body['applicationID']
-
-    event = events_data.get_event(event_id)
-    if not event:
-        return jsonify({'message': 'Event not found'}), 404
-
-    for app in event['applications']:
-        if app['id'] == application_id:
-            app['status'] = 'denied'
-            events_data.save()
-            return jsonify({'message': 'Application denied'}), 200
-
-    return jsonify({'message': 'Application not found'}), 404
+def update_application(application_id, status):
+    updated_application = ApplicationsDAL.update_application(application_id, status)
+    return updated_application
 
 def get_venues():
     results = venues_data.get_venues()

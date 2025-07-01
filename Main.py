@@ -73,7 +73,7 @@ def create_event():
 
     return jsonify(event), 201
 
-# Get Event
+# Get an Event
 @app.route('/events/<eventId>', methods=['GET'])
 @cross_origin(origin='http://localhost:4200')
 @token_required
@@ -112,41 +112,74 @@ def update_event():
     else:
         return jsonify({'error': 'Event not found or update failed'}), 404
 
+
+# =======================================================================
+#  
+# Applications Endpoints
+#
+# ======================================================================= 
+
 # Get Applications
-@app.route('/events/applications/<event_id>', methods=['GET'])
+@app.route('/applications', methods=['GET'])
 @cross_origin(origin='http://localhost:4200')
 @token_required
-def get_applications(event_id):
-    return Controller.get_applications(event_id)
+def get_applications():
+    event_id = request.args.get('event_id', default=None, type=int)
+    performer_id = request.args.get('performer_id', default=None, type=str)
+    status = request.args.get('status', default=None, type=str)
 
-# Get Performer Applications
-@app.route('/events/applications/performer/<performer_id>', methods=['GET'])
-@cross_origin(origin='http://localhost:4200')
-@token_required
-def get_performer_applications(performer_id):
-    return Controller.get_performer_applications(performer_id)
+    applications = Controller.get_applications(event_id, performer_id, status)
+    
+    if applications:
+        return jsonify(applications), 200
+    else:
+        return jsonify({'message': 'No events found'}), 404
 
-# Add Application
-@app.route('/events/applications', methods=['POST'])
+# Create Application
+@app.route('/applications', methods=['POST'])
 @cross_origin(origin='http://localhost:4200')
 @token_required
-def add_application():
-    request_body = request.json
-    return Controller.add_application(request_body)
+def create_application():
+    data = request.get_json()
 
-# Approve an Application
-@app.route('/events/applications/approve', methods=['POST'])
-@cross_origin(origin='http://localhost:4200')
-@token_required
-def approve_application():
-    return Controller.approve_application(request.json)
+    application = Controller.create_application(
+        event_id=data['event_id'],
+        performer_id=data['performer_id']
+    )
 
-# Deny an Application
-@app.route('/events/applications/deny', methods=['POST'])
+    return jsonify(application), 201
+
+# Update Application
+@app.route('/applications', methods=['PUT'])
 @cross_origin(origin='http://localhost:4200')
 @token_required
-def deny_performer():
-    return Controller.deny_application(request.json)
+def update_application():
+    data = request.get_json()
+
+    id = data.get('id')
+    status = data.get('status')
+
+    updated_application = Controller.update_application(
+        id,
+        status
+    )
+
+    if updated_application:
+        return jsonify(updated_application), 200
+    else:
+        return jsonify({'error': 'Application not found or update failed'}), 404
+
+# Get an Application
+@app.route('/applications/<application_id>', methods=['GET'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def get_application(application_id):
+    application = Controller.get_application(application_id)
+
+    if application:
+        return jsonify(application)
+    else:
+        return jsonify({'error': 'Application not found'}), 404
 
 # =======================================================================
 #  
