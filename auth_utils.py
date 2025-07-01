@@ -1,6 +1,7 @@
 import jwt
 from flask import request, jsonify
 from functools import wraps
+from helpers import date_helper
 
 SECRET_KEY = "Secret_key"
 
@@ -29,3 +30,7 @@ def token_required(f):
         return f(*args, **kwargs)
 
     return decorated
+
+def generate_jwt(user_name, role):
+    token = jwt.encode({'user_id' : user_name, 'role': role, 'exp' : date_helper.get_token_expiration()}, "Secret_key", algorithm="HS256")
+    return token

@@ -18,7 +18,12 @@ CORS(app, resources={r"/*": {"origins": [
 
 @app.route('/login', methods=['POST'])
 def login():
-    return Controller.login_user(request.json)
+    credentials = request.json
+    results = Controller.login(credentials['email'], credentials['password'])
+    if results:
+        return jsonify(results), 200
+    else:
+        return jsonify({"message": "Invalid Login."}), 401
 
 # =======================================================================
 #  
@@ -26,12 +31,75 @@ def login():
 #
 # ======================================================================= 
 
-# Get A Single User by UserID
-@app.route('/users/<userId>', methods=['GET'])
+# Get User
+@app.route('/users/<user_id>', methods=['GET'])
 @cross_origin(origin='http://localhost:4200')
 @token_required
-def get_user(userId):
-    return Controller.get_user(userId)
+def get_user(user_id):
+    user = Controller.get_user(user_id)
+    if user:
+        return jsonify(user)
+    else:
+        return jsonify({'error': 'User not found'}), 404
+    
+# Get Users
+@app.route('/users', methods=['GET'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def get_users():
+    name = request.args.get('host_id', default=None, type=str)
+    email = request.args.get('email', default=None, type=str)
+    role = request.args.get('role', default=None, type=str)
+    active = request.args.get('active', default=None, type=str)
+
+    users = Controller.get_users(name, email, role, active)
+    
+    if users:
+        return jsonify(users), 200
+    else:
+        return jsonify({'message': 'No users found'}), 404
+    
+# Create User 
+@app.route('/users', methods=['POST'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def create_user():
+    data = request.get_json()
+
+    user = Controller.create_user(
+        name=data['name'],
+        email=data['email'],
+        password=data['password'],
+        role=data['role']
+    )
+
+    return jsonify(user), 201
+
+# Update User
+@app.route('/users', methods=['PUT'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def update_user():
+    data = request.get_json()
+
+    id = data.get('id')
+    name = data.get('name')
+    email = data.get('email')
+    password = data.get('password')
+    role = data.get('role')
+
+    updated_user = Controller.update_user(
+        id,
+        name,
+        email,
+        password,
+        role
+    )
+
+    if updated_user:
+        return jsonify(updated_user), 200
+    else:
+        return jsonify({'error': 'User not found or update failed'}), 404
 
 # =======================================================================
 #  
@@ -85,7 +153,7 @@ def get_event(eventId):
         return jsonify({'error': 'Event not found'}), 404
 
 # Update Event
-@app.route('/events/update', methods=['PUT'])
+@app.route('/events', methods=['PUT'])
 @cross_origin(origin='http://localhost:4200')
 @token_required
 def update_event():
