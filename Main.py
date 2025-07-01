@@ -62,7 +62,6 @@ def get_users():
 # Create User 
 @app.route('/users', methods=['POST'])
 @cross_origin(origin='http://localhost:4200')
-@token_required
 def create_user():
     data = request.get_json()
 
