@@ -3,7 +3,8 @@ CREATE OR REPLACE FUNCTION User_UPDATE(
     p_name VARCHAR DEFAULT NULL,
     p_email VARCHAR DEFAULT NULL,
     p_password_hash TEXT DEFAULT NULL,
-    p_role VARCHAR DEFAULT NULL
+    p_role VARCHAR DEFAULT NULL,
+    p_is_active BOOLEAN DEFAULT NULL
 )
 RETURNS TABLE (
     id INTEGER,
@@ -11,6 +12,7 @@ RETURNS TABLE (
     email VARCHAR,
     password_hash TEXT,
     role VARCHAR,
+    is_active BOOLEAN,
     created_at TIMESTAMP
 )
 LANGUAGE plpgsql
@@ -22,8 +24,9 @@ BEGIN
         name = COALESCE(p_name, users.name),
         email = COALESCE(p_email, users.email),
         password_hash = COALESCE(p_password_hash, users.password_hash),
-        role = COALESCE(p_role, users.role)
+        role = COALESCE(p_role, users.role),
+        is_active = COALESCE(p_is_active, users.is_active)
     WHERE users.id = p_id
-    RETURNING users.id, users.name, users.email, users.password_hash, users.role, users.created_at;
+    RETURNING users.id, users.name, users.email, users.password_hash, users.role, users.is_active, users.created_at;
 END;
 $$;

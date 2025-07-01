@@ -5,6 +5,7 @@ RETURNS TABLE (
     email VARCHAR,
     password_hash TEXT,
     role VARCHAR,
+    is_active BOOLEAN,
     created_at TIMESTAMP
 )
 LANGUAGE plpgsql
@@ -16,6 +17,7 @@ BEGIN
             users.email, 
             users.password_hash, 
             users.role, 
+            users.is_active,
             users.created_at
     FROM users
     WHERE users.id = p_id;

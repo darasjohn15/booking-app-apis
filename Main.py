@@ -18,7 +18,12 @@ CORS(app, resources={r"/*": {"origins": [
 
 @app.route('/login', methods=['POST'])
 def login():
-    return Controller.login_user(request.json)
+    credentials = request.json
+    results = Controller.login(credentials['email'], credentials['password'])
+    if results:
+        return jsonify(results), 200
+    else:
+        return jsonify({"message": "Invalid Login."}), 401
 
 # =======================================================================
 #  
@@ -36,6 +41,23 @@ def get_user(user_id):
         return jsonify(user)
     else:
         return jsonify({'error': 'User not found'}), 404
+    
+# Get Users
+@app.route('/users', methods=['GET'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def get_users():
+    name = request.args.get('host_id', default=None, type=str)
+    email = request.args.get('email', default=None, type=str)
+    role = request.args.get('role', default=None, type=str)
+    active = request.args.get('active', default=None, type=str)
+
+    users = Controller.get_users(name, email, role, active)
+    
+    if users:
+        return jsonify(users), 200
+    else:
+        return jsonify({'message': 'No users found'}), 404
     
 # Create User 
 @app.route('/users', methods=['POST'])
