@@ -1,6 +1,6 @@
 from flask import *
 from flask_cors import CORS, cross_origin
-import Controller
+import controller
 from auth_utils import token_required
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ CORS(app, resources={r"/*": {"origins": [
 @app.route('/login', methods=['POST'])
 def login():
     credentials = request.json
-    results = Controller.login(credentials['email'], credentials['password'])
+    results = controller.login(credentials['email'], credentials['password'])
     if results:
         return jsonify(results), 200
     else:
@@ -36,7 +36,7 @@ def login():
 @cross_origin(origin='http://localhost:4200')
 @token_required
 def get_user(user_id):
-    user = Controller.get_user(user_id)
+    user = controller.get_user(user_id)
     if user:
         return jsonify(user)
     else:
@@ -52,7 +52,7 @@ def get_users():
     role = request.args.get('role', default=None, type=str)
     active = request.args.get('active', default=None, type=str)
 
-    users = Controller.get_users(name, email, role, active)
+    users = controller.get_users(name, email, role, active)
     
     if users:
         return jsonify(users), 200
@@ -66,7 +66,7 @@ def get_users():
 def create_user():
     data = request.get_json()
 
-    user = Controller.create_user(
+    user = controller.create_user(
         name=data['name'],
         email=data['email'],
         password=data['password'],
@@ -88,7 +88,7 @@ def update_user():
     password = data.get('password')
     role = data.get('role')
 
-    updated_user = Controller.update_user(
+    updated_user = controller.update_user(
         id,
         name,
         email,
@@ -116,7 +116,7 @@ def get_events():
     active = request.args.get('active', default=None, type=str)
     location = request.args.get('location', default=None, type=str)
 
-    events = Controller.get_events(host_id, active, location)
+    events = controller.get_events(host_id, active, location)
     
     if events:
         return jsonify(events), 200
@@ -130,7 +130,7 @@ def get_events():
 def create_event():
     data = request.get_json()
 
-    event = Controller.create_event(
+    event = controller.create_event(
         host_id=data['host_id'],
         venue_id=data['venue_id'],
         title=data['title'],
@@ -146,7 +146,7 @@ def create_event():
 @cross_origin(origin='http://localhost:4200')
 @token_required
 def get_event(eventId):
-    event = Controller.get_event(eventId)
+    event = controller.get_event(eventId)
     if event:
         return jsonify(event)
     else:
@@ -166,7 +166,7 @@ def update_event():
     description = data.get('description')
     is_active = data.get('is_active')
 
-    updated_event = Controller.update_event(
+    updated_event = controller.update_event(
         id,
         title,
         date,
@@ -196,7 +196,7 @@ def get_applications():
     performer_id = request.args.get('performer_id', default=None, type=str)
     status = request.args.get('status', default=None, type=str)
 
-    applications = Controller.get_applications(event_id, performer_id, status)
+    applications = controller.get_applications(event_id, performer_id, status)
     
     if applications:
         return jsonify(applications), 200
@@ -210,7 +210,7 @@ def get_applications():
 def create_application():
     data = request.get_json()
 
-    application = Controller.create_application(
+    application = controller.create_application(
         event_id=data['event_id'],
         performer_id=data['performer_id']
     )
@@ -227,7 +227,7 @@ def update_application():
     id = data.get('id')
     status = data.get('status')
 
-    updated_application = Controller.update_application(
+    updated_application = controller.update_application(
         id,
         status
     )
@@ -242,7 +242,7 @@ def update_application():
 @cross_origin(origin='http://localhost:4200')
 @token_required
 def get_application(application_id):
-    application = Controller.get_application(application_id)
+    application = controller.get_application(application_id)
 
     if application:
         return jsonify(application)
@@ -260,7 +260,7 @@ def get_application(application_id):
 @cross_origin(origin='http://localhost:4200')
 @token_required
 def get_venues():
-    return Controller.get_venues()
+    return controller.get_venues()
 
 if __name__ == '__main__':
     app.run(port=8085)
