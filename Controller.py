@@ -1,9 +1,9 @@
-import DAL.VenuesDAL
+import dal.VenuesDAL
 from flask import *
 import auth_utils
-from DAL import ApplicationsDAL
-from DAL import events_dal
-from DAL import users_dal
+from dal import applications_dal
+from dal import events_dal
+from dal import users_dal
 from helpers import password_helper
 from dotenv import load_dotenv
 import os
@@ -11,7 +11,7 @@ import os
 load_dotenv() 
 
 #Load Venues Data
-venues_data = DAL.VenuesDAL.VenuesDAL("VenuesData.json")
+venues_data = dal.VenuesDAL.VenuesDAL("VenuesData.json")
 
 def login(email, password):
     users = get_users(None, email, None, None)
@@ -89,18 +89,18 @@ def create_event(host_id, venue_id, title, description, location, date):
     return events_dal.create_event(host_id, venue_id, title, description, location, date)
 
 def get_applications(event_id, performer_id, status):
-    applications = ApplicationsDAL.get_applications(event_id, performer_id, status)
+    applications = applications_dal.get_applications(event_id, performer_id, status)
     return applications
 
 def get_application(application_id):
-    event = ApplicationsDAL.get_application(application_id)
+    event = applications_dal.get_application(application_id)
     return event
     
 def create_application(event_id, performer_id):
-     return ApplicationsDAL.create_application(event_id, performer_id)
+     return applications_dal.create_application(event_id, performer_id)
 
 def update_application(application_id, status):
-    updated_application = ApplicationsDAL.update_application(application_id, status)
+    updated_application = applications_dal.update_application(application_id, status)
     return updated_application
 
 def get_venues():

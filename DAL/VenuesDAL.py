@@ -1,4 +1,4 @@
-from DAL.Database import DatabaseObject
+from dal.Database import DatabaseObject
 
 class VenuesDAL(DatabaseObject):
     def get_venues(self):
