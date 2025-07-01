@@ -1,138 +1,41 @@
-from DAL.Database import DatabaseObject
+from db import get_db_connection
+from psycopg2.extras import RealDictCursor
 
-class UsersDAL(DatabaseObject):
+def get_user(user_id):
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    cur.execute("SELECT * FROM User_GET(%s);", (user_id,))
+    event = cur.fetchone()
+    cur.close()
+    conn.close()
+    return event
 
-    def addUser(self, user):
-        self._data.append(user)
-        self.save()
-        self.reload()
-        print('')
-        print('New User Created!')
-        print('')
+def create_user(name, email, password_hash, role):
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
 
-    def getUsers(self):
-        return self._data
+    cur.execute("SELECT * FROM User_CREATE(%s, %s, %s, %s);", 
+                (name, email, password_hash, role))
 
-    def get_user(self, id):
-        for x in self._data:
-            userid = x['id']
-            if(id == userid):
-                return x
-            
-    def getUserByEmail(self, email):
-        for x in self._data:
-            if (email == x['email'] and x['active']):
-                return x
+    new_event = cur.fetchone()
+    conn.commit()
+    cur.close()
+    conn.close()
 
-    def updateUser(self, user):
-        for x in self._data:
-            if(x['id'] == user['id']):
-                x = user
-            else:
-                continue
+    return new_event
 
-        print(self._data)
-
-    def deactivateUser(self, id):
-        index = 0
-        deactivated = False
-        
-        for x in self._data:
-            if (x['id'] == id):
-                x['active'] = False
-                self.save()
-                self.reload()
-                deactivated = True
-                print('')
-                print('User Deactivated!')
-                print('')
-                break
-
-        if (not deactivated):
-            print('')
-            print('Invalid User ID...')
-            print('')
+def update_user(id, name=None, email=None, password_hash=None, role=None):
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
     
-    def activateUser(self, id):
-        index = 0
-        activated = False
-        
-        for x in self._data:
-            if (x['id'] == id):
-                x['active'] = True
-                self.save()
-                self.reload()
-                activated = True
-                print('')
-                print('User Activated!')
-                print('')
-                break
-
-        if (not activated):
-            print('')
-            print('Invalid User ID...')
-            print('')
-
-    def editUser(self, userId, firstName, lastName, email, age):
-        for x in self._data:
-            if (x['id'] == userId):
-                print('Users DAL: User Found!')
-                x['firstName'] = firstName
-                x['lastName'] = lastName
-                x['email'] = email
-                x['age'] = age
-                self.save()
-                self.reload()
-                print('Users DAL: User Updated!')
-                break
-
-    def getPassword(self, userId):
-        for x in self._data:
-            if (x['id'] == userId):
-                print('Users DAL: User Found!')
-                return x['password']
-
-    def changePassword(self, userId, newPassword):
-        for x in self._data:
-            if (x['id'] == userId):
-                print('Users DAL: User Found!')
-                x['password'] = newPassword
-                self.save()
-                self.reload()
-                print('Users DAL: Password Updated!')
-                break
-
-    def getUserCount(self):
-        print('Database Class: Data length is ' + str(len(self._data)))
-
-    def getMessages(self, userId):
-        for x in self._data:
-            if (x['id'] == userId):
-                print('Users DAL: User Found!')
-                return x['messages']
-
-    def addMessage(self, message):
-        for x in self._data:
-            if( x['id'] == message.userId):
-                x['messages'].append(message)
-                self.save()
-                self.reload()
-                print('Users DAL: Message Delivered!')
-
-    def readMessage(self, userId, messageId):
-        for user in self._data:
-            
-            if (user['id'] == userId):
-                print('Users DAL: User Found!')
-
-                for message in user['messages']:
-                    
-                    if (message['id'] == messageId):
-                        print('Users DAL: Message Found!')
-                        message['read'] = True
-                        self.save()
-                        self.reload()
-                        print('Users DAL: Message Read!')
-                        break
-                
-                break
+    cur.execute(
+        "SELECT * FROM User_UPDATE(%s, %s, %s, %s, %s);",
+        (id, name, email, password_hash, role)
+    )
+    
+    updated_event = cur.fetchone()
+    conn.commit()
+    cur.close()
+    conn.close()
+    
+    return updated_event
