@@ -20,7 +20,7 @@ Lightweight local file-based data storage (JSON) for quick testing and prototypi
 ## Tech Stack
 **Language**: Python 3  
 **Framework**: Flask  
-**Storage**: JSON files  
+**Storage**: PostgreSQL Database 
 **Authentication**: JWT-based auth
 
 ## Getting Started
@@ -80,31 +80,32 @@ Use the included Postman collection to test the API:
 
 | Method | Endpoint        | Description          |
 |--------|------------------|----------------------|
+| GET    | `/users`         | Get a list of users by ID. Supports query parameters     |
 | GET    | `/users/:userId` | Get a user by ID     |
+| POST   | `/users`         | Create a user     |
+| PUT    | `/users`         | Edit a user by ID     |
 
 ---
 
 ### Events
 
-| Method | Endpoint                   | Description                        |
+| Method | Endpoint                    | Description                        |
 |--------|-----------------------------|------------------------------------|
-| GET    | `/events`                   | Get all events                     |
-| GET    | `/events/:eventId`          | Get a specific event by ID         |
-| GET    | `/events/host/:hostId`      | Get events hosted by a specific host |
-| POST   | `/events`                   | Create a new event                 |
-| PUT    | `/events/:userId/:eventId`  | Update an event *(legacy/test)*   |
+| GET    | `/events`                   | Get a list of events. Supports query parameters  |
+| GET    | `/events/:eventId`          | Get an event by ID         |
+| POST   | `/events`                   | Create a event                 |
+| PUT    | `/events`                   | Edit an event   |
 
 ---
 
 ### Applications
 
-| Method | Endpoint                                            | Description                         |
+| Method | Endpoint                                              | Description                         |
 |--------|------------------------------------------------------|-------------------------------------|
-| GET    | `/events/applications/:eventId`                      | Get all applications for an event   |
-| GET    | `/events/applications/performer/:performerId`        | Get all applications by a performer |
-| POST   | `/events/applications`                               | Submit an application to an event   |
-| POST   | `/events/applications/approve`                       | Approve an application              |
-| POST   | `/events/applications/deny`                          | Deny an application                 |
+| GET    | `/applications`                      | Get a list of applications. Supports query parameters   |
+| GET    | `/applications/:applicatonId`        | Get an applications by ID |
+| POST   | `/applications`                      | Create an application  |
+| Put    | `/applications`                      | Update an application status |
 
 ---
 
@@ -113,6 +114,3 @@ Use the included Postman collection to test the API:
 | Method | Endpoint     | Description         |
 |--------|--------------|---------------------|
 | GET    | `/venues`    | Get a list of venues |
-
-## Status
-Actively in development. Designed for local testing and API prototyping — easily extendable to support persistent storage and production use.
