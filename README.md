@@ -105,7 +105,7 @@ Use the included Postman collection to test the API:
 | GET    | `/applications`                      | Get a list of applications. Supports query parameters   |
 | GET    | `/applications/:applicatonId`        | Get an applications by ID |
 | POST   | `/applications`                      | Create an application  |
-| Put    | `/applications`                      | Update an application status |
+| PUT    | `/applications`                      | Update an application status |
 
 ---
 
