@@ -49,7 +49,3 @@ def update_event(event_id, title=None, date=None, venue_id=None, description=Non
     conn.close()
     
     return updated_event
-            
-        
-            
-        

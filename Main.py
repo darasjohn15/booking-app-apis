@@ -54,10 +54,7 @@ def get_users():
 
     users = controller.get_users(name, email, role, active)
     
-    if users:
-        return jsonify(users), 200
-    else:
-        return jsonify({'message': 'No users found'}), 404
+    return jsonify(users), 200
     
 # Create User 
 @app.route('/users', methods=['POST'])
@@ -117,10 +114,7 @@ def get_events():
 
     events = controller.get_events(host_id, active, location)
     
-    if events:
-        return jsonify(events), 200
-    else:
-        return jsonify({'message': 'No events found'}), 404
+    return jsonify(events), 200
 
 # Create New Event 
 @app.route('/events', methods=['POST'])
@@ -178,6 +172,14 @@ def update_event():
         return jsonify(updated_event), 200
     else:
         return jsonify({'error': 'Event not found or update failed'}), 404
+    
+# Get Event Performers
+@app.route('/events/performers/<event_id>', methods=['GET'])
+@cross_origin(origin='http://localhost:4200')
+@token_required
+def get_event_performers(event_id):
+    performers = controller.get_event_performers(event_id)
+    return jsonify(performers), 200
 
 
 # =======================================================================
