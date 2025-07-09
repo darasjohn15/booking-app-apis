@@ -88,6 +88,18 @@ def update_event(event_id, title=None, date=None, venue_id=None, description=Non
 def create_event(host_id, venue_id, title, description, location, date):
     return events_dal.create_event(host_id, venue_id, title, description, location, date)
 
+def get_event_performers(event_id):
+    applications = applications_dal.get_applications(event_id, None, None)
+    approved_apps = [app for app in applications if app["status"] == "approved"]
+    
+    performers = []
+    for app in approved_apps:
+        performer_id = app["performer_id"]
+        user = users_dal.get_user(performer_id)
+        performers.append(user)
+
+    return performers
+
 def get_applications(event_id, performer_id, status):
     applications = applications_dal.get_applications(event_id, performer_id, status)
     return applications
