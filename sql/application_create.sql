@@ -13,8 +13,8 @@ LANGUAGE plpgsql
 AS $$
 BEGIN
     RETURN QUERY
-    INSERT INTO event_applications(event_id, performer_id, status, applied_at)
+    INSERT INTO applications(event_id, performer_id, status, applied_at)
     VALUES (p_event_id, p_performer_id, 'pending', NOW())
-    RETURNING event_applications.id, event_applications.event_id, event_applications.performer_id, event_applications.status, event_applications.applied_at;
+    RETURNING applications.id, applications.event_id, applications.performer_id, applications.status, applications.applied_at;
 END;
 $$;

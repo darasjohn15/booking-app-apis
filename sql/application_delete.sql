@@ -10,8 +10,8 @@ LANGUAGE plpgsql
 AS $$
 BEGIN
     RETURN QUERY
-    DELETE FROM event_applications
-    WHERE event_applications.id = p_id
-    RETURNING event_applications.id, event_applications.event_id, event_applications.performer_id, event_applications.status, event_applications.applied_at;
+    DELETE FROM applications
+    WHERE applications.id = p_id
+    RETURNING applications.id, applications.event_id, applications.performer_id, applications.status, applications.applied_at;
 END;
 $$;
