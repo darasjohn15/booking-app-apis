@@ -10,6 +10,10 @@ CORS(app, resources={r"/*": {"origins": [
     "https://booking-web-app-asce.onrender.com"
 ]}}, supports_credentials=True)
 
+@app.get("/ping")
+def ping():
+    return {"status": "Ok"}, 200
+
 # =======================================================================
 #  
 # Authentication Endpoints

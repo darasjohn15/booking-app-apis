@@ -14,7 +14,7 @@ load_dotenv()
 venues_data = dal.VenuesDAL.VenuesDAL("VenuesData.json")
 
 def login(email, password):
-    users = get_users(None, email, None, None)
+    users = get_users(None, email, None, True)
     
     if not users:
         return jsonify({'message' : 'User not found'}), 401
@@ -40,10 +40,6 @@ def get_user(userId):
     return user
 
 def get_users(name, email, role, active):
-    # convert 'true'/'false' strings to boolean if needed
-    if active is not None:
-        active = active.lower() == 'true'
-
     users = users_dal.get_users(name, email, role, active)
 
     return users
