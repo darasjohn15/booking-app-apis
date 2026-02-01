@@ -1,14 +1,21 @@
+import os
 from flask import *
 from flask_cors import CORS, cross_origin
 import controller
 from auth_utils import token_required
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": [
-    "http://localhost:4200",
-    "http://127.0.0.1:4200",
-    "https://booking-web-app-asce.onrender.com"
-]}}, supports_credentials=True)
+
+def get_allowed_origins():
+    raw = os.getenv("CORS_ORIGINS")
+    if raw:
+        return [o.strip() for o in raw.split(",") if o.strip()]
+    # default for local dev
+    return ["http://localhost:4200"]
+
+allowed_origins = get_allowed_origins()
+
+CORS(app, resources={r"/*": {"origins": allowed_origins}})
 
 @app.get("/ping")
 def ping():
