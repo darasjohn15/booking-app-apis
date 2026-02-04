@@ -3,6 +3,7 @@ from flask import *
 from flask_cors import CORS, cross_origin
 import controller
 from auth_utils import token_required
+from flask import request, make_response
 
 app = Flask(__name__)
 
@@ -10,12 +11,15 @@ def get_allowed_origins():
     raw = os.getenv("CORS_ORIGINS")
     if raw:
         return [o.strip() for o in raw.split(",") if o.strip()]
-    # default for local dev
     return ["http://localhost:4200"]
 
 allowed_origins = get_allowed_origins()
 
-CORS(app, resources={r"/*": {"origins": allowed_origins}})
+CORS(
+    app,
+    resources={r"/*": {"origins": allowed_origins}},
+    supports_credentials=True
+)
 
 @app.get("/ping")
 def ping():
@@ -27,14 +31,13 @@ def ping():
 #
 # ======================================================================= 
 
-@app.route('/login', methods=['POST'])
+@app.route("/login", methods=["POST"])
+@cross_origin(origins='http://localhost:4200')
 def login():
-    credentials = request.json
-    results = controller.login(credentials['email'], credentials['password'])
-    if results:
-        return jsonify(results), 200
-    else:
-        return jsonify({"message": "Invalid Login."}), 401
+    credentials = request.get_json(silent=True) or {}
+    results = controller.login(credentials.get("email"), credentials.get("password"))
+    return (jsonify(results), 200) if results else (jsonify({"message": "Invalid Login."}), 401)
+
 
 # =======================================================================
 #  
