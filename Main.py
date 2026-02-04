@@ -32,7 +32,7 @@ def ping():
 # ======================================================================= 
 
 @app.route("/login", methods=["POST"])
-@cross_origin(origins='http://localhost:4200')
+@cross_origin(origins=allowed_origins)
 def login():
     credentials = request.get_json(silent=True) or {}
     results = controller.login(credentials.get("email"), credentials.get("password"))
