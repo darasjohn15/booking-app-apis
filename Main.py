@@ -1,9 +1,9 @@
 import os
 from flask import *
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 import controller
 from auth_utils import token_required
-from flask import request, make_response
+from flask import request
 
 app = Flask(__name__)
 
@@ -32,7 +32,6 @@ def ping():
 # ======================================================================= 
 
 @app.route("/login", methods=["POST"])
-@cross_origin(origins=allowed_origins)
 def login():
     credentials = request.get_json(silent=True) or {}
     results = controller.login(credentials.get("email"), credentials.get("password"))
@@ -47,7 +46,6 @@ def login():
 
 # Get User
 @app.route('/users/<user_id>', methods=['GET'])
-@cross_origin(origin='http://localhost:4200')
 @token_required
 def get_user(user_id):
     user = controller.get_user(user_id)
@@ -58,7 +56,6 @@ def get_user(user_id):
     
 # Get Users
 @app.route('/users', methods=['GET'])
-@cross_origin(origin='http://localhost:4200')
 @token_required
 def get_users():
     name = request.args.get('host_id', default=None, type=str)
@@ -72,7 +69,6 @@ def get_users():
     
 # Create User 
 @app.route('/users', methods=['POST'])
-@cross_origin(origin='http://localhost:4200')
 def create_user():
     data = request.get_json()
 
@@ -87,7 +83,6 @@ def create_user():
 
 # Update User
 @app.route('/users', methods=['PUT'])
-@cross_origin(origin='http://localhost:4200')
 @token_required
 def update_user():
     data = request.get_json()
@@ -119,7 +114,6 @@ def update_user():
 
 # Get Events
 @app.route('/events', methods=['GET'])
-@cross_origin(origin='http://localhost:4200')
 @token_required
 def get_events():
     host_id = request.args.get('host_id', default=None, type=int)
@@ -132,7 +126,6 @@ def get_events():
 
 # Create New Event 
 @app.route('/events', methods=['POST'])
-@cross_origin(origin='http://localhost:4200')
 @token_required
 def create_event():
     data = request.get_json()
@@ -150,7 +143,6 @@ def create_event():
 
 # Get an Event
 @app.route('/events/<eventId>', methods=['GET'])
-@cross_origin(origin='http://localhost:4200')
 @token_required
 def get_event(eventId):
     event = controller.get_event(eventId)
@@ -161,7 +153,6 @@ def get_event(eventId):
 
 # Update Event
 @app.route('/events', methods=['PUT'])
-@cross_origin(origin='http://localhost:4200')
 @token_required
 def update_event():
     data = request.get_json()
@@ -189,7 +180,6 @@ def update_event():
     
 # Get Event Performers
 @app.route('/events/performers/<event_id>', methods=['GET'])
-@cross_origin(origin='http://localhost:4200')
 @token_required
 def get_event_performers(event_id):
     performers = controller.get_event_performers(event_id)
@@ -204,7 +194,6 @@ def get_event_performers(event_id):
 
 # Get Applications
 @app.route('/applications', methods=['GET'])
-@cross_origin(origin='http://localhost:4200')
 @token_required
 def get_applications():
     event_id = request.args.get('event_id', default=None, type=int)
@@ -220,7 +209,6 @@ def get_applications():
 
 # Create Application
 @app.route('/applications', methods=['POST'])
-@cross_origin(origin='http://localhost:4200')
 @token_required
 def create_application():
     data = request.get_json()
@@ -234,7 +222,6 @@ def create_application():
 
 # Update Application
 @app.route('/applications', methods=['PUT'])
-@cross_origin(origin='http://localhost:4200')
 @token_required
 def update_application():
     data = request.get_json()
@@ -254,7 +241,6 @@ def update_application():
 
 # Get an Application
 @app.route('/applications/<application_id>', methods=['GET'])
-@cross_origin(origin='http://localhost:4200')
 @token_required
 def get_application(application_id):
     application = controller.get_application(application_id)
@@ -272,7 +258,6 @@ def get_application(application_id):
 
 # Get Venues
 @app.route('/venues', methods=['GET'])
-@cross_origin(origin='http://localhost:4200')
 @token_required
 def get_venues():
     return controller.get_venues()
