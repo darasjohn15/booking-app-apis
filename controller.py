@@ -1,17 +1,14 @@
-import dal.VenuesDAL
 from flask import *
 import auth_utils
 from dal import applications_dal
 from dal import events_dal
 from dal import users_dal
+from dal import venues_dal
 from helpers import password_helper
 from dotenv import load_dotenv
 import os
 
 load_dotenv() 
-
-#Load Venues Data
-venues_data = dal.VenuesDAL.VenuesDAL("VenuesData.json")
 
 def login(email, password):
     users = get_users(None, email, None, True)
@@ -57,12 +54,12 @@ def update_user(user_id, name=None, email=None, password=None, role=None):
     updated_user = users_dal.update_user(user_id, name, email, password, role)
     return updated_user
 
-def get_events(host_id, active, location):
+def get_events(host_id, active, location, venue_id, date_start, date_end, page_number):
     # convert 'true'/'false' strings to boolean if needed
     if active is not None:
         active = active.lower() == 'true'
 
-    events = events_dal.get_events(host_id, active, location)
+    events = events_dal.get_events(host_id, active, location, venue_id, date_start, date_end, page_number)
 
     return events
 
@@ -81,8 +78,8 @@ def update_event(event_id, title=None, date=None, venue_id=None, description=Non
     )
     return updated_event
 
-def create_event(host_id, venue_id, title, description, location, date):
-    return events_dal.create_event(host_id, venue_id, title, description, location, date)
+def create_event(host_id, venue_id, title, description, date):
+    return events_dal.create_event(host_id, venue_id, title, description, date)
 
 def get_event_performers(event_id):
     applications = applications_dal.get_applications(event_id, None, None)
@@ -111,6 +108,10 @@ def update_application(application_id, status):
     updated_application = applications_dal.update_application(application_id, status)
     return updated_application
 
+def get_venue(venue_id):
+    venue = venues_dal.get_venue(venue_id)
+    return venue
+
 def get_venues():
-    results = venues_data.get_venues()
-    return jsonify(results), 200
+    venues = venues_dal.get_venues()
+    return venues

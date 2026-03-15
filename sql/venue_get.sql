@@ -1,0 +1,12 @@
+CREATE OR REPLACE FUNCTION Venue_GET(p_ID INTEGER)
+RETURNS TABLE (
+    id INTEGER,
+    name VARCHAR
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT *
+    FROM venues v
+    WHERE v.id = p_ID;
+END;
+$$ LANGUAGE plpgsql;

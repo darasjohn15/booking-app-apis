@@ -10,22 +10,22 @@ def get_event(event_id):
     conn.close()
     return event
 
-def get_events(host_id=None, active=None, location=None, venue_id=None, date_start=None, date_end=None):
+def get_events(host_id=None, active=None, location=None, venue_id=None, date_start=None, date_end=None, page_number=1, page_limit=6):
     conn = get_db_connection()
     cur = conn.cursor(cursor_factory=RealDictCursor)
-    cur.execute("SELECT * FROM Events_GET(%s, %s, %s, %s, %s, %s);", (host_id, active, location, venue_id, date_start, date_end))
+    cur.execute("SELECT * FROM Events_GET(%s, %s, %s, %s, %s, %s, %s, %s);", (host_id, active, location, venue_id, date_start, date_end, page_number, page_limit))
     events = cur.fetchall()
     cur.close()
     conn.close()
 
     return events
 
-def create_event(host_id, venue_id, title, description, location, date):
+def create_event(host_id, venue_id, title, description, date):
     conn = get_db_connection()
     cur = conn.cursor(cursor_factory=RealDictCursor)
 
-    cur.execute("SELECT * FROM Event_CREATE(%s, %s, %s, %s, %s, %s);", 
-                (host_id, venue_id, title, description, location, date))
+    cur.execute("SELECT * FROM Event_CREATE(%s, %s, %s, %s, %s);", 
+                (host_id, venue_id, title, description, date))
 
     new_event = cur.fetchone()
     conn.commit()

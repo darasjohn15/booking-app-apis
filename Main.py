@@ -119,8 +119,12 @@ def get_events():
     host_id = request.args.get('host_id', default=None, type=int)
     active = request.args.get('active', default=None, type=str)
     location = request.args.get('location', default=None, type=str)
+    venue_id = request.args.get('venue_id', default=None, type=int)
+    date_start = request.args.get('date_start', default=None, type=str)
+    date_end = request.args.get('date_end', default=None, type=str)
+    page_number = request.args.get('page_number', default=None, type=int)
 
-    events = controller.get_events(host_id, active, location)
+    events = controller.get_events(host_id, active, location, venue_id, date_start, date_end, page_number)
     
     return jsonify(events), 200
 
@@ -131,11 +135,10 @@ def create_event():
     data = request.get_json()
 
     event = controller.create_event(
-        host_id=data['host_id'],
-        venue_id=data['venue_id'],
+        host_id=data['hostID'],
+        venue_id=data['venueID'],
         title=data['title'],
         description=data['description'],
-        location=data['location'],
         date=data['date']
     )
 

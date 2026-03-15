@@ -57,6 +57,14 @@ def deploy_tables():
         );
     """)
 
+    # 4. Venues table
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS venues (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR NOT NULL
+        );
+    """)
+
     # Commit changes and close connection
     conn.commit()
     cur.close()
