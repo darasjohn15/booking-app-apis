@@ -17,10 +17,14 @@ jobs:
         with:
           python-version: "3.9"
 
-      - name: Install dependencies (sanity check)
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Run unit tests with coverage
+        run: |
+          pytest --cov=controller --cov=Main --cov=auth_utils --cov-report=term-missing
 
       - name: Basic import check
         run: |
