@@ -32,5 +32,5 @@ def token_required(f):
     return decorated
 
 def generate_jwt(user_name, role):
-    token = jwt.encode({'user_id' : user_name, 'role': role, 'exp' : date_helper.get_token_expiration()}, "Secret_key", algorithm="HS256")
+    token = jwt.encode({'user_id' : user_name, 'role': role, 'exp' : date_helper.get_token_expiration()}, SECRET_KEY, algorithm="HS256")
     return token
