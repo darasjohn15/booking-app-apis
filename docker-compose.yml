@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    container_name: book-a-gig-api
+    ports:
+      - "8085:8085"
+    env_file:
+      - .env.compose
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: book-a-gig-db
+    environment:
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: app_password
+      POSTGRES_DB: appdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

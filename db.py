@@ -8,6 +8,7 @@ def get_db_connection():
     user = os.getenv("DB_USER")
     password = os.getenv("DB_PASSWORD")
     port = os.getenv("DB_PORT", 5432)
+    sslmode = os.getenv("DB_SSLMODE", "disable")
 
     # Fail fast if env vars are missing
     if not all([host, dbname, user, password]):
@@ -20,7 +21,7 @@ def get_db_connection():
             user=user,
             password=password,
             port=port,
-            sslmode="require",
+            sslmode=sslmode,
             connect_timeout=5,
             cursor_factory=RealDictCursor,
         )

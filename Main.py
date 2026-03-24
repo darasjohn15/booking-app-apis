@@ -92,19 +92,38 @@ def update_user():
     email = data.get('email')
     password = data.get('password')
     role = data.get('role')
+    is_active = data.get('is_active')
 
     updated_user = controller.update_user(
         id,
         name,
         email,
         password,
-        role
+        role,
+        is_active
     )
 
     if updated_user:
         return jsonify(updated_user), 200
     else:
         return jsonify({'error': 'User not found or update failed'}), 404
+
+# Change Password
+@app.route('/users/change-password', methods=['PUT'])
+@token_required
+def change_password():
+    data = request.get_json()
+
+    user_id = data.get('user_id')
+    current_password = data.get('current_password')
+    new_password = data.get('new_password')
+
+    updated_user, error = controller.change_password(user_id, current_password, new_password)
+
+    if error:
+        return jsonify({'error': error}), 400
+
+    return jsonify(updated_user), 200
 
 # =======================================================================
 #  
@@ -266,4 +285,4 @@ def get_venues():
     return controller.get_venues()
 
 if __name__ == '__main__':
-    app.run(port=8085)
+    app.run(host='0.0.0.0', port=8085)

@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def get_db_connection():
-    """Connect to Supabase Postgres using environment variables."""
+    """Connect to Postgres using environment variables."""
     conn = psycopg2.connect(
         host=os.getenv("DB_HOST"),
         database=os.getenv("DB_NAME"),
@@ -37,12 +37,14 @@ def deploy_tables():
     cur.execute("""
         CREATE TABLE IF NOT EXISTS events (
             id SERIAL PRIMARY KEY,
-            user_id INTEGER REFERENCES users(id),
+            host_id INTEGER REFERENCES users(id),
             title VARCHAR NOT NULL,
             description TEXT,
             location VARCHAR,
             date TIMESTAMP NOT NULL,
-            created_at TIMESTAMP DEFAULT now()
+            created_at TIMESTAMP DEFAULT now(),
+            venue_id INTEGER,
+            is_active BOOLEAN DEFAULT true
         );
     """)
 

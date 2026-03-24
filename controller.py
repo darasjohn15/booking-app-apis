@@ -47,12 +47,26 @@ def create_user(name, email, password, role):
 
     return users_dal.create_user(name, email, password, role)
 
-def update_user(user_id, name=None, email=None, password=None, role=None):
+def update_user(user_id, name=None, email=None, password=None, role=None, is_active=None):
     if password:
         password = password_helper.hash_password(password)
 
-    updated_user = users_dal.update_user(user_id, name, email, password, role)
+    updated_user = users_dal.update_user(user_id, name, email, password, role, is_active)
     return updated_user
+
+def change_password(user_id, current_password, new_password):
+    user = users_dal.get_user(user_id)
+
+    if not user:
+        return None, 'User not found'
+
+    if not password_helper.verify_password(current_password, user['password_hash']):
+        return None, 'Current password is incorrect'
+
+    new_password_hash = password_helper.hash_password(new_password)
+    updated_user = users_dal.update_user(user_id, password_hash=new_password_hash)
+
+    return updated_user, None
 
 def get_events(host_id, active, location, venue_id, date_start, date_end, page_number):
     # convert 'true'/'false' strings to boolean if needed
