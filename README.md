@@ -1,46 +1,79 @@
 # Performer Booking API
+
 This is the backend service for the Performer Booking App, a platform that connects performers with venue owners to simplify event booking and management. The API handles user authentication, event data, application workflows, and role-based access control.
 
-## Features
-**User Management**  
-Handles login, registration, and role distinction (host vs. performer)
+## Project Overview
+Performer Booking API is the backend service for Book A Gig, a full-stack web application that connects performers with venue owners to simplify event discovery, booking, and application management.
 
-**Event Management**  
-Hosts can create and manage events, each tied to a venue and location
+The API provides authentication, role-based authorization, event management, performer applications, and venue management through a RESTful Flask API.
 
-**Performer Applications**  
-Performers can apply to events; hosts can review and approve/deny applications
+This project was built to strengthen my backend engineering skills using Python while demonstrating API design, authentication, database integration, and role-based application workflows.
 
-**Secure Endpoints**  
-Protected routes with token validation and custom role-based access
+## Architecture Diagram
+The diagram below will outline the backend code organization and show how the main Flask API layers fit together, including request handling, authentication, data access, models, and supporting helpers.
 
-**Data Storage**  
-Lightweight local file-based data storage (JSON) for quick testing and prototyping
+![Architecture diagram placeholder](docs/architecture-diagram-placeholder.svg)
 
 ## Tech Stack
-**Language**: Python 3  
-**Framework**: Flask  
-**Storage**: PostgreSQL Database 
-**Authentication**: JWT-based auth
+| Category       | Technology |
+| -------------- | ---------- |
+| Language       | Python     |
+| Framework      | Flask      |
+| Database       | PostgreSQL |
+| Authentication | JWT        |
+| API Style      | REST       |
+| Testing        | Postman    |
 
-## Getting Started
-```
-# Clone the repo
-git clone https://github.com/darasjohn15/booking-app-api.git
-cd booking-app-api
+## Why This Tech Stack
+| Technology | Why I Chose It                                       |
+| ---------- | ---------------------------------------------------- |
+| Python     | Clean syntax and rapid backend development.          |
+| Flask      | Lightweight framework focused on REST APIs.          |
+| PostgreSQL | Relational database for structured application data. |
+| JWT        | Stateless authentication for secure API access.      |
+| Postman    | Simplifies API testing during development.           |
 
-# (Optional) Create virtual environment
-python3 -m venv venv
-source venv/bin/activate
+## Engineering Decisions
+**RESTful API Design**  
+Endpoints are organized around application resources such as Users, Events, Venues, and Applications to create a predictable API structure.
 
-# Install dependencies
-pip install -r requirements.txt
+**Role-Based Authorization**  
+Hosts and performers have different permissions, allowing business rules to be enforced at the API level.
 
-# Run the server
-python app.py
+**JWT Authentication**  
+Authentication uses JSON Web Tokens to protect API endpoints without maintaining server-side sessions.
 
-# Server runs on http://127.0.0.1:4200 by default.
-```
+**Layered Project Organization**  
+The application separates controllers, models, authentication utilities, and data access responsibilities to improve maintainability.
+
+**PostgreSQL**  
+A relational database was selected to model the relationships between users, events, venues, and performer applications.
+
+## Features
+**Authentication**
+- User registration
+- Login
+- JWT authentication
+
+**Event Management**
+- Create events
+- Update events
+- View events
+
+**Performer Applications**
+- Apply for events
+- Review applications
+- Approve or deny performers
+
+**Venue Management**
+- Manage venues
+- Associate venues with events
+
+**User Management**
+- Host accounts
+- Performer accounts
+- Role-based permissions
+
 
 ## Project Structure
 ```
@@ -56,61 +89,11 @@ booking-app-api/
 └── Main.py            # Main app entry point
 ```
 
-## API Testing
-Use the included Postman collection to test the API:
+## API Documentation
+For detailed endpoint documentation, see [API Documentation](docs/api_documentation.md).
 
-- File: `booking-app-api.postman_collection.json`
-- Import it into Postman and set the base URL (e.g., `https://booking-app-apis.onrender.com`)
+## Getting Started
+To set up the project locally, see [Local Environment Setup](docs/local_environment_setup.md).
 
-## API Endpoints
-
-> All authenticated endpoints require a `Bearer <token>` in the `Authorization` header.
-
----
-
-### Auth
-
-| Method | Endpoint     | Description                     |
-|--------|--------------|---------------------------------|
-| POST   | `/login`     | User login and JWT token retrieval |
-
----
-
-### Users
-
-| Method | Endpoint        | Description          |
-|--------|------------------|----------------------|
-| GET    | `/users`         | Get a list of users by ID. Supports query parameters     |
-| GET    | `/users/:userId` | Get a user by ID     |
-| POST   | `/users`         | Create a user     |
-| PUT    | `/users`         | Edit a user by ID     |
-
----
-
-### Events
-
-| Method | Endpoint                    | Description                        |
-|--------|-----------------------------|------------------------------------|
-| GET    | `/events`                   | Get a list of events. Supports query parameters  |
-| GET    | `/events/:eventId`          | Get an event by ID         |
-| POST   | `/events`                   | Create a event                 |
-| PUT    | `/events`                   | Edit an event   |
-
----
-
-### Applications
-
-| Method | Endpoint                                              | Description                         |
-|--------|------------------------------------------------------|-------------------------------------|
-| GET    | `/applications`                      | Get a list of applications. Supports query parameters   |
-| GET    | `/applications/:applicatonId`        | Get an applications by ID |
-| POST   | `/applications`                      | Create an application  |
-| PUT    | `/applications`                      | Update an application status |
-
----
-
-### Venues
-
-| Method | Endpoint     | Description         |
-|--------|--------------|---------------------|
-| GET    | `/venues`    | Get a list of venues |
+## Roadmap
+No upcoming features are planned at this time.

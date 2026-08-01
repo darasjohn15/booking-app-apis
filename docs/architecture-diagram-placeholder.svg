@@ -1,0 +1,9 @@
+<svg width="960" height="540" viewBox="0 0 960 540" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Architecture diagram placeholder</title>
+  <desc id="desc">Placeholder image for the Performer Booking API architecture diagram.</desc>
+  <rect width="960" height="540" fill="#F8FAFC"/>
+  <rect x="40" y="40" width="880" height="460" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="10 10"/>
+  <text x="480" y="238" fill="#334155" font-family="Arial, sans-serif" font-size="34" font-weight="700" text-anchor="middle">Architecture Diagram</text>
+  <text x="480" y="286" fill="#64748B" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">Placeholder for backend code structure</text>
+  <text x="480" y="326" fill="#94A3B8" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">Replace this file when the final diagram is ready</text>
+</svg>
